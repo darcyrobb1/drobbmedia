@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact | Book DRobbMedia Photography</title>
+    <meta name="description" content="Contact DRobbMedia to book photography for sport, events, portraits, teams, and creative projects in Melbourne.">
+    <meta name="keywords" content="book DRobbMedia, contact Melbourne photographer, sports photographer booking, event photographer Melbourne">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://drobbmedia.com.au/contact/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact | Book DRobbMedia Photography">
+    <meta property="og:description" content="Enquire about DRobbMedia photography bookings, photo sales, and event coverage.">
+    <meta property="og:image" content="https://drobbmedia.com.au/assets/photos/IMG_69101.jpg">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="DRobbMedia home">DRobbMedia</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="galleries.html">Galleries</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="contact-hero">
+        <img src="assets/photos/IMG_69101.jpg" alt="DRobbMedia contact and booking photography visual" width="1000" height="750" fetchpriority="high">
+        <div>
+          <p class="eyebrow">Bookings and enquiries</p>
+          <h1>Let’s make the photos look like the moment felt.</h1>
+          <p>Send through the date, location, type of coverage, and any photo purchase questions. This form is frontend-ready and can be connected to Formspree, Basin, Netlify Forms, or a custom Vercel serverless endpoint.</p>
+        </div>
+      </section>
+
+      <section class="contact-layout section-wrap">
+        <div class="contact-details">
+          <h2>Enquiry details</h2>
+          <p>For now, the fastest deployment path is a static form provider. For payments, use Stripe Payment Links first, then upgrade to full Stripe Checkout when you want carts, discount codes, and automated fulfilment.</p>
+          <a class="text-link" href="galleries.html">View galleries</a>
+        </div>
+        <form class="contact-form" name="contact" method="post" action="#" data-contact-form>
+          <label>
+            Name
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label>
+            Shoot type
+            <select name="shoot_type" required>
+              <option value="">Select one</option>
+              <option>Sport</option>
+              <option>Event</option>
+              <option>Portrait</option>
+              <option>Photo purchase</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="6" required></textarea>
+          </label>
+          <button class="button button-dark" type="submit">Send enquiry</button>
+          <p class="form-note" data-form-note hidden>Form captured locally for now. Connect a form endpoint before launch.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span data-year></span> DRobbMedia</p>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="galleries.html">Galleries</a>
+      </div>
+    </footer>
+    <script src="assets/main.js"></script>
+  </body>
+</html>
