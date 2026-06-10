@@ -138,9 +138,9 @@ textarea {
   object-fit: cover;
 }
 
-.eyebrow {
+.intro .eyebrow {
   margin: 0 0 16px;
-  color: var(--accent);
+  color: var(--ink);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.16em;
