@@ -13,6 +13,7 @@ import {
 } from "./data.js";
 
 const e = React.createElement;
+const logoSrc = "/assets/drobbmedia-logo.png";
 
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
@@ -44,7 +45,12 @@ function Navbar() {
   return e(
     "header",
     { className: `navbar ${scrolled ? "navbar-solid" : ""}` },
-    e("a", { href: "#top", className: "brand", onClick: () => setOpen(false) }, "DRobbMedia"),
+    e(
+      "a",
+      { href: "#top", className: "brand", onClick: () => setOpen(false), "aria-label": "DRobbMedia home" },
+      e("img", { src: logoSrc, alt: "", className: "brand-logo" }),
+      e("span", null, "DRobbMedia"),
+    ),
     e(
       "button",
       {
@@ -152,6 +158,7 @@ function Hero() {
             visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
           },
         },
+        e("img", { src: logoSrc, alt: "DRobbMedia logo", className: "hero-logo" }),
         e("h1", null, "DRobbMedia"),
       ),
       e(
@@ -464,7 +471,12 @@ function Footer() {
   return e(
     "footer",
     { className: "footer" },
-    e("a", { href: "#top", className: "brand" }, "DRobbMedia"),
+    e(
+      "a",
+      { href: "#top", className: "brand", "aria-label": "DRobbMedia home" },
+      e("img", { src: logoSrc, alt: "", className: "brand-logo" }),
+      e("span", null, "DRobbMedia"),
+    ),
     e("nav", { "aria-label": "Footer navigation" }, navItems.map((item) => e("a", { key: item.href, href: item.href }, item.label))),
     e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:hello@drobbmedia.com" }, "Email")),
     e("p", null, `Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.`),
