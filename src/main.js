@@ -446,7 +446,7 @@ function ContactForm() {
           e(
             "select",
             { name: "shootType", defaultValue: "Sports Coverage" },
-            ["Sports Coverage", "Wedding Photography", "Event Photography", "Portraits", "Social Media Content", "Highlight Reels"].map((option) =>
+            ["Sports Coverage", "Wedding Photography", "Event Photography", "Portraits", "Highlight Reels"].map((option) =>
               e("option", { key: option, value: option }, option),
             ),
           ),
