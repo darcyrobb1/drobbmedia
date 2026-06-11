@@ -89,12 +89,6 @@ export const services = [
     price: "From $___",
   },
   {
-    title: "Social Media Content",
-    description: "High-impact images designed for launches, campaigns, athletes, creators, and teams.",
-    includes: ["Shot list planning", "Vertical-first selects", "Fast edit turnaround", "Usage-ready exports"],
-    price: "From $___",
-  },
-  {
     title: "Highlight Reels",
     description: "Short-form motion coverage for sport, events, weddings, and behind-the-scenes stories.",
     includes: ["Vertical video capture", "Music-led edit", "Caption-safe framing", "Platform-ready export"],
