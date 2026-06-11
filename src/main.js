@@ -1,19 +1,38 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import {
   contactLinks,
-  galleryFilters,
-  galleryImages,
   heroSlides,
   navItems,
-  portfolioCategories,
   services,
   testimonials,
 } from "./data.js";
 
 const e = React.createElement;
 const logoSrc = "/assets/drobbmedia-logo.png";
+const portfolioSections = [
+  {
+    id: "portfolio-sports",
+    nextId: "portfolio-events",
+    number: "01",
+    title: "Sports",
+    text: "Action, emotion, pressure, and the moments that decide the game.",
+  },
+  {
+    id: "portfolio-events",
+    nextId: "portfolio-commercial",
+    number: "02",
+    title: "Events",
+    text: "Atmosphere, detail, people, and coverage built around the room.",
+  },
+  {
+    id: "portfolio-commercial",
+    number: "03",
+    title: "Commercial",
+    text: "Clean brand imagery for teams, people, products, and campaigns.",
+  },
+];
 
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
@@ -181,7 +200,7 @@ function Hero() {
             visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
           },
         },
-        "Cinematic coverage for fast-moving sport, live events, and wedding moments that deserve to feel as powerful as they looked.",
+        "Cinematic coverage for fast-moving sport, live events, and commercial projects that deserve to feel as powerful as they looked.",
       ),
       e(
         motion.div,
@@ -196,7 +215,7 @@ function Hero() {
         e("a", { className: "btn btn-dark", href: "#contact" }, "Book a Shoot"),
       ),
     ),
-    e("a", { href: "#about", className: "scroll-indicator", "aria-label": "Scroll to about section" }, e("span", null)),
+    e("a", { href: "#portfolio", className: "scroll-indicator", "aria-label": "Scroll to portfolio section" }, e("span", null)),
   );
 }
 
@@ -216,7 +235,7 @@ function About() {
           text:
             "DRobbMedia captures fast-paced sport, live events, and wedding stories with a cinematic, professional style. The work is built around movement, atmosphere, and clean emotion.",
         }),
-        e("div", { className: "about-stats" }, e("span", null, "Sport"), e("span", null, "Events"), e("span", null, "Weddings")),
+        e("div", { className: "about-stats" }, e("span", null, "Sport"), e("span", null, "Events"), e("span", null, "Commercial")),
       ),
       e(
         motion.div,
@@ -234,107 +253,59 @@ function About() {
   );
 }
 
-function ImageCard({ item, large = false }) {
-  return e(
-    motion.article,
-    {
-      className: `image-card ${large ? "image-card-large" : ""}`,
-      initial: { opacity: 0, y: 30 },
-      whileInView: { opacity: 1, y: 0 },
-      viewport: { once: true, margin: "-70px" },
-      transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
-    },
-    e("img", { src: item.src, alt: `${item.title} photography placeholder`, loading: "lazy" }),
-    e("div", { className: "card-shade" }),
-    e(
-      "div",
-      { className: "image-card-copy" },
-      e("h3", null, item.title),
-      item.description ? e("p", null, item.description) : e("p", null, item.category),
-      e("a", { href: "#galleries" }, "View Gallery"),
-    ),
-  );
-}
-
 function PortfolioCategories() {
-  return e(
-    "section",
-    { id: "portfolio", className: "section section-black" },
-    e(
-      "div",
-      { className: "site-container" },
-      e(SectionHeading, {
-        eyebrow: "Portfolio",
-        title: "Coverage with atmosphere, pace, and polish.",
-        text: "Five clear lanes for the work you will replace with final DRobbMedia galleries when ready.",
-      }),
-      e(
-        "div",
-        { className: "portfolio-grid" },
-        portfolioCategories.map((item, index) => e(ImageCard, { key: item.title, item, large: index === 0 })),
-      ),
-    ),
-  );
-}
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
 
-function GalleryGrid() {
-  const [active, setActive] = useState("All");
-  const visibleImages = useMemo(
-    () => (active === "All" ? galleryImages : galleryImages.filter((image) => image.category === active)),
-    [active],
-  );
+    const viewed = new Set();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const nextId = entry.target.getAttribute("data-next-section");
+          if (!nextId || viewed.has(nextId)) return;
+          viewed.add(nextId);
+          window.setTimeout(() => {
+            document.getElementById(nextId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 280);
+        });
+      },
+      { threshold: 0.78 },
+    );
+
+    document.querySelectorAll("[data-next-section]").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
   return e(
     "section",
-    { id: "galleries", className: "section gallery-section" },
-    e(
-      "div",
-      { className: "site-container" },
-      e(SectionHeading, {
-        eyebrow: "Featured Galleries",
-        title: "A flexible image system for sport, weddings, events, and portraits.",
-        text: "Filter the placeholders now, then swap the image paths in one data file later.",
-        align: "center",
-      }),
+    { id: "portfolio", className: "portfolio-showcase" },
+    portfolioSections.map((section) =>
       e(
-        "div",
-        { className: "filter-row", role: "tablist", "aria-label": "Gallery filters" },
-        galleryFilters.map((filter) =>
-          e(
-            "button",
-            {
-              key: filter,
-              type: "button",
-              className: active === filter ? "filter-button filter-active" : "filter-button",
-              onClick: () => setActive(filter),
-            },
-            filter,
-          ),
-        ),
-      ),
-      e(
-        motion.div,
-        { className: "gallery-grid", layout: true },
+        "article",
+        { key: section.id, id: section.id, className: "portfolio-panel" },
         e(
-          AnimatePresence,
-          null,
-          visibleImages.map((image, index) =>
-            e(
-              motion.figure,
-              {
-                key: image.src + active,
-                className: `gallery-item span-${(index % 5) + 1}`,
-                layout: true,
-                initial: { opacity: 0, y: 24, scale: 0.98 },
-                animate: { opacity: 1, y: 0, scale: 1 },
-                exit: { opacity: 0, y: 16, scale: 0.98 },
-                transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-              },
-              e("img", { src: image.src, alt: `${image.title} placeholder`, loading: "lazy" }),
-              e("figcaption", null, e("span", null, image.category), image.title),
-            ),
-          ),
+          motion.div,
+          {
+            className: "portfolio-panel-copy",
+            initial: { opacity: 0, y: 34 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true, amount: 0.36 },
+            transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+          },
+          e("p", { className: "eyebrow" }, `Portfolio / ${section.number}`),
+          e("h2", null, section.title),
+          e("p", null, section.text),
         ),
+        e("div", { className: "portfolio-photo-grid", "aria-label": `${section.title} photos will appear here` }),
+        section.nextId
+          ? e(
+              "div",
+              { className: "portfolio-scroll-trigger", "data-next-section": section.nextId },
+              e("a", { href: `#${section.nextId}` }, `Continue to ${section.nextId === "portfolio-events" ? "Events" : "Commercial"}`),
+              e("span", { "aria-hidden": true }),
+            )
+          : null,
       ),
     ),
   );
@@ -453,7 +424,7 @@ function ContactForm() {
           e(
             "select",
             { name: "shootType", defaultValue: "Sports Coverage" },
-            ["Sports Coverage", "Wedding Photography", "Event Photography", "Portraits", "Highlight Reels"].map((option) =>
+            ["Sports Coverage", "Event Photography", "Commercial Photography", "Highlight Reels"].map((option) =>
               e("option", { key: option, value: option }, option),
             ),
           ),
@@ -489,7 +460,7 @@ function App() {
     null,
     e(Loader),
     e(Navbar),
-    e("main", null, e(Hero), e(PortfolioCategories), e(GalleryGrid), e(Services), e(Testimonials), e(About), e(ContactForm)),
+    e("main", null, e(Hero), e(PortfolioCategories), e(Services), e(Testimonials), e(About), e(ContactForm)),
     e(Footer),
   );
 }
