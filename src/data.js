@@ -24,51 +24,6 @@ export const heroSlides = [
   },
 ];
 
-export const portfolioCategories = [
-  {
-    title: "Sports Photography",
-    description: "Speed, pressure, celebration, and the moments that decide the game.",
-    src: "/assets/photos/RL1D0607.jpg",
-  },
-  {
-    title: "Event Photography",
-    description: "Atmosphere-led coverage for launches, live events, milestones, and community nights.",
-    src: "/assets/photos/IMG_9404.jpg",
-  },
-  {
-    title: "Wedding Photography",
-    description: "Emotional, polished coverage with a quiet eye for the in-between moments.",
-    src: "/assets/photos/RL1D4155.jpg",
-  },
-  {
-    title: "Portraits",
-    description: "Clean portraits for athletes, creatives, couples, teams, and personal brands.",
-    src: "/assets/photos/RL1D1639.jpg",
-  },
-  {
-    title: "Behind the Scenes",
-    description: "Raw production energy, social content, and the story around the main event.",
-    src: "/assets/photos/RL1D3740.jpg",
-  },
-];
-
-export const galleryImages = [
-  { src: "/assets/photos/RL1D2168.jpg", category: "Sport", title: "Local Football Match" },
-  { src: "/assets/photos/RL1D0607.jpg", category: "Sport", title: "Game Day Focus" },
-  { src: "/assets/photos/RL1D3455.jpg", category: "Sport", title: "Sideline Energy" },
-  { src: "/assets/photos/IMG_9404.jpg", category: "Events", title: "Live Event Detail" },
-  { src: "/assets/photos/IMG_9381.jpg", category: "Events", title: "Guest Arrival" },
-  { src: "/assets/photos/RL1D4006.jpg", category: "Events", title: "Room Atmosphere" },
-  { src: "/assets/photos/RL1D4155.jpg", category: "Weddings", title: "Ceremony Light" },
-  { src: "/assets/photos/RL1D6186.jpg", category: "Weddings", title: "Reception Moment" },
-  { src: "/assets/photos/RL1D2130.jpg", category: "Weddings", title: "Quiet Portrait" },
-  { src: "/assets/photos/RL1D1639.jpg", category: "Portraits", title: "Editorial Portrait" },
-  { src: "/assets/photos/RL1D0070.jpg", category: "Portraits", title: "Studio Energy" },
-  { src: "/assets/photos/IMG_69101.jpg", category: "Portraits", title: "Natural Frame" },
-];
-
-export const galleryFilters = ["All", "Sport", "Weddings", "Events", "Portraits"];
-
 export const services = [
   {
     title: "Sports Coverage",
@@ -77,15 +32,15 @@ export const services = [
     price: "From $___",
   },
   {
-    title: "Wedding Packages",
-    description: "Premium wedding storytelling with clean direction, natural emotion, and cinematic edits.",
-    includes: ["Planning call", "Ceremony and portraits", "Reception coverage", "Private online gallery"],
-    price: "From $___",
-  },
-  {
     title: "Event Photography",
     description: "Polished event coverage built for brands, venues, communities, and milestone moments.",
     includes: ["Arrival and detail shots", "Candid guest coverage", "Key moments", "Fast preview delivery"],
+    price: "From $___",
+  },
+  {
+    title: "Commercial Photography",
+    description: "Clean brand imagery for businesses, teams, campaigns, products, and social content.",
+    includes: ["Planning call", "Shot list", "Edited commercial gallery", "Web and social-ready files"],
     price: "From $___",
   },
   {
