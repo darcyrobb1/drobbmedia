@@ -97,10 +97,25 @@ textarea {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.55rem, 2.4vw, 2.25rem);
   font-weight: 500;
   line-height: 1;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.navbar-solid .brand-logo {
+  width: 36px;
+  height: 36px;
 }
 
 .nav-links {
@@ -192,6 +207,13 @@ textarea {
   position: relative;
   z-index: 2;
   width: min(940px, 100%);
+}
+
+.hero-logo {
+  display: block;
+  width: clamp(86px, 13vw, 154px);
+  height: auto;
+  margin: 0 0 24px;
 }
 
 .hero-content h1 {
@@ -748,6 +770,10 @@ textarea {
 }
 
 @media (max-width: 900px) {
+  .brand span {
+    display: none;
+  }
+
   .nav-toggle {
     display: block;
   }
