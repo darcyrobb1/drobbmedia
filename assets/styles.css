@@ -75,11 +75,21 @@ textarea {
 .brand {
   grid-column: 2;
   justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.25rem, 1.55vw, 1.55rem);
   letter-spacing: 0;
   font-weight: 500;
   color: var(--white);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .site-nav {
