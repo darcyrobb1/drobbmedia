@@ -4,45 +4,1499 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DRobbMedia | Sports, Events & Wedding Photography</title>
-    <meta
-      name="description"
-      content="DRobbMedia captures sport, events, weddings, portraits, and social content with a cinematic, premium photography style."
-    />
+    <meta name="description" content="DRobbMedia captures sport, events, weddings, portraits, and social content with a cinematic, premium photography style." />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://drobbmedia.com.au/" />
-    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <link rel="icon" href="https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://esm.sh" />
-    <script>
-      tailwind = {
-        config: {
-          theme: {
-            extend: {
-              fontFamily: {
-                sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-                serif: ["Cormorant Garamond", "Georgia", "serif"],
-              },
-            },
-          },
-        },
-      };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "@vite/client": "data:text/javascript,",
-          "react": "https://esm.sh/react@18.3.1",
-          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-          "framer-motion": "https://esm.sh/framer-motion@11.18.2?external=react"
-        }
-      }
-    </script>
-    <link rel="stylesheet" href="/src/styles.css" />
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --black: #050505;
+  --ink: #121212;
+  --paper: #f4f4f1;
+  --white: #ffffff;
+  --muted: #a7a7a2;
+  --line: rgba(255, 255, 255, 0.16);
+  --dark-line: rgba(5, 5, 5, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
+}
+
+body {
+  margin: 0;
+  color: var(--paper);
+  background: var(--black);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  color: var(--black);
+  background: var(--white);
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  background: var(--black);
+}
+
+.loader p {
+  margin: 0;
+  color: var(--white);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+}
+
+.loader-line {
+  width: min(320px, 68vw);
+  height: 1px;
+  transform-origin: left;
+  background: var(--white);
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 18px clamp(18px, 4vw, 56px);
+  color: var(--white);
+  transition: background 300ms ease, border-color 300ms ease, padding 300ms ease;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar-solid {
+  padding-block: 12px;
+  background: rgba(5, 5, 5, 0.84);
+  border-color: var(--line);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.55rem, 2.4vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.nav-links {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 30px);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.nav-links a {
+  position: relative;
+  padding-block: 6px;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: currentColor;
+  transition: transform 250ms ease;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-toggle {
+  display: none;
+  justify-self: end;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 17px;
+  height: 1px;
+  margin: 5px auto;
+  background: var(--white);
+}
+
+.hero-section {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 118px clamp(18px, 5vw, 70px) clamp(88px, 11vh, 130px);
+}
+
+.hero-media,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media {
+  overflow: hidden;
+  background: #111;
+}
+
+.hero-image {
+  width: 100%;
+  height: calc(100% + 160px);
+  object-fit: cover;
+  filter: grayscale(0.95) contrast(1.08);
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.42) 44%, rgba(5, 5, 5, 0.16)),
+    linear-gradient(0deg, rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0) 48%),
+    radial-gradient(circle at 72% 25%, rgba(255, 255, 255, 0.1), transparent 28%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(940px, 100%);
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(5rem, 14vw, 14rem);
+  font-weight: 500;
+  line-height: 0.82;
+}
+
+.hero-tagline {
+  margin: 24px 0 0;
+  font-size: clamp(1rem, 2.3vw, 1.65rem);
+  color: var(--white);
+}
+
+.hero-intro {
+  width: min(620px, 100%);
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 22px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  transition: transform 220ms ease, background 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-light {
+  color: var(--black);
+  background: var(--white);
+  border-color: var(--white);
+}
+
+.btn-dark {
+  color: var(--white);
+  background: transparent;
+}
+
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 2;
+  width: 28px;
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.scroll-indicator span {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--white);
+  animation: scroll-dot 1.45s ease-in-out infinite;
+}
+
+@keyframes scroll-dot {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 18px);
+  }
+}
+
+.section {
+  padding: clamp(76px, 10vw, 142px) clamp(18px, 5vw, 70px);
+}
+
+.section-black {
+  color: var(--paper);
+  background: var(--black);
+}
+
+.site-container,
+.site-grid {
+  width: min(1240px, 100%);
+  margin-inline: auto;
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  gap: clamp(34px, 7vw, 92px);
+  align-items: center;
+}
+
+.section-heading {
+  width: min(760px, 100%);
+  margin-bottom: clamp(34px, 5vw, 62px);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.65rem, 6.5vw, 6.4rem);
+  font-weight: 500;
+  line-height: 0.93;
+}
+
+.section-copy {
+  width: min(640px, 100%);
+  margin: 22px 0 0;
+  color: rgba(244, 244, 241, 0.72);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
+.about-section,
+.gallery-section,
+.testimonials-section,
+.contact-section {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.about-section .section-copy,
+.gallery-section .section-copy,
+.testimonials-section .section-copy,
+.contact-section .section-copy {
+  color: rgba(18, 18, 18, 0.66);
+}
+
+.about-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-stats span {
+  padding: 10px 14px;
+  border: 1px solid var(--dark-line);
+  border-radius: 999px;
+  color: rgba(18, 18, 18, 0.7);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.portrait-frame {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  border-radius: 8px;
+  background: #111;
+}
+
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  object-fit: cover;
+  filter: grayscale(0.9) contrast(1.04);
+}
+
+.portrait-caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  padding: 12px 14px;
+  color: var(--white);
+  background: rgba(5, 5, 5, 0.64);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  font-size: 0.78rem;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.image-card {
+  position: relative;
+  min-height: 430px;
+  overflow: hidden;
+  border-radius: 8px;
+  grid-column: span 2;
+  background: #181818;
+}
+
+.image-card-large {
+  grid-column: span 4;
+}
+
+.image-card img,
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.9) contrast(1.05);
+  transition: transform 700ms ease, filter 700ms ease;
+}
+
+.image-card:hover img,
+.gallery-item:hover img {
+  transform: scale(1.055);
+  filter: grayscale(0.65) contrast(1.07);
+}
+
+.card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(5, 5, 5, 0.86), transparent 66%);
+}
+
+.image-card-copy {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2;
+}
+
+.image-card-copy h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 3vw, 3.35rem);
+  line-height: 0.96;
+}
+
+.image-card-copy p {
+  max-width: 460px;
+  margin: 12px 0 18px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.image-card-copy a {
+  display: inline-flex;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 34px;
+}
+
+.filter-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--dark-line);
+  border-radius: 999px;
+  color: var(--ink);
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.filter-active {
+  color: var(--white);
+  background: var(--ink);
+}
+
+.gallery-grid {
+  columns: 3 260px;
+  column-gap: 14px;
+}
+
+.gallery-item {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-height: 320px;
+  margin: 0 0 14px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #191919;
+}
+
+.gallery-item.span-1,
+.gallery-item.span-4 {
+  height: 520px;
+}
+
+.gallery-item.span-2,
+.gallery-item.span-5 {
+  height: 390px;
+}
+
+.gallery-item.span-3 {
+  height: 620px;
+}
+
+.gallery-item figcaption {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  color: var(--white);
+  background: rgba(5, 5, 5, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.gallery-item figcaption span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.service-card {
+  display: flex;
+  min-height: 380px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.service-card h3 {
+  margin: 0 0 12px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.service-card p,
+.service-card li {
+  color: rgba(244, 244, 241, 0.68);
+}
+
+.service-card ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.service-card li::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 9px 2px 0;
+  border-radius: 999px;
+  background: var(--white);
+}
+
+.service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.service-footer a {
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.testimonial-card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px;
+  border: 1px solid var(--dark-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.testimonial-card p {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.65rem, 2.7vw, 2.45rem);
+  line-height: 1.02;
+}
+
+.testimonial-card strong,
+.testimonial-card span {
+  display: block;
+}
+
+.testimonial-card span {
+  margin-top: 4px;
+  color: rgba(18, 18, 18, 0.56);
+}
+
+.contact-grid {
+  align-items: start;
+}
+
+.contact-links {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-links a {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.contact-links span {
+  color: rgba(18, 18, 18, 0.55);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid var(--dark-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.contact-form label {
+  display: grid;
+  gap: 8px;
+  color: rgba(18, 18, 18, 0.72);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--dark-line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 14px 13px;
+  outline: none;
+  text-transform: none;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: rgba(18, 18, 18, 0.58);
+}
+
+.contact-form .full {
+  grid-column: 1 / -1;
+}
+
+.contact-form .btn {
+  cursor: pointer;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 28px;
+  padding: 34px clamp(18px, 5vw, 70px);
+  color: var(--white);
+  background: var(--black);
+  border-top: 1px solid var(--line);
+}
+
+.footer nav,
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.footer p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: rgba(244, 244, 241, 0.52);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1100px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 12px;
+    right: 12px;
+    display: grid;
+    gap: 0;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(5, 5, 5, 0.94);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+
+  .nav-links a {
+    padding: 14px;
+  }
+
+  .nav-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .site-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait-frame,
+  .portrait-frame img {
+    min-height: 520px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-card,
+  .image-card-large {
+    grid-column: auto;
+  }
+
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    align-items: flex-end;
+    padding-bottom: 82px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(4.1rem, 22vw, 6rem);
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .section {
+    padding-block: 68px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2.45rem, 15vw, 4.2rem);
+  }
+
+  .image-card {
+    min-height: 470px;
+  }
+
+  .gallery-grid {
+    columns: 1;
+  }
+
+  .gallery-item,
+  .gallery-item.span-1,
+  .gallery-item.span-2,
+  .gallery-item.span-3,
+  .gallery-item.span-4,
+  .gallery-item.span-5 {
+    height: 450px;
+  }
+
+  .services-grid,
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card:last-child {
+    grid-column: auto;
+  }
+
+  .contact-form .full {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+    .mx-auto { margin-left: auto; margin-right: auto; }
+.text-center { text-align: center; }
+</style>
   </head>
   <body>
     <div id="root"></div>
     <noscript>DRobbMedia requires JavaScript to display the full photography experience.</noscript>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module">
+import React, { useEffect, useMemo, useState } from "react";
+import { createRoot } from "react-dom/client";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+// Replace image paths here when your final DRobbMedia galleries are ready.
+// Keep the same object shape and point `src` to files in /assets/photos or /images.
+
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Portfolio", href: "#portfolio" },
+  { label: "Galleries", href: "#galleries" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
+];
+
+const heroSlides = [
+  {
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/generated/drobbmedia-hero-placeholder.png",
+    title: "Cinematic photography placeholder",
+  },
+  {
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D2168.jpg",
+    title: "Sport action placeholder",
+  },
+  {
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_9404.jpg",
+    title: "Event atmosphere placeholder",
+  },
+];
+
+const portfolioCategories = [
+  {
+    title: "Sports Photography",
+    description: "Speed, pressure, celebration, and the moments that decide the game.",
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D0607.jpg",
+  },
+  {
+    title: "Event Photography",
+    description: "Atmosphere-led coverage for launches, live events, milestones, and community nights.",
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_9404.jpg",
+  },
+  {
+    title: "Wedding Photography",
+    description: "Emotional, polished coverage with a quiet eye for the in-between moments.",
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D4155.jpg",
+  },
+  {
+    title: "Portraits",
+    description: "Clean portraits for athletes, creatives, couples, teams, and personal brands.",
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D1639.jpg",
+  },
+  {
+    title: "Behind the Scenes",
+    description: "Raw production energy, social content, and the story around the main event.",
+    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D3740.jpg",
+  },
+];
+
+const galleryImages = [
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D2168.jpg", category: "Sport", title: "Local Football Match" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D0607.jpg", category: "Sport", title: "Game Day Focus" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D3455.jpg", category: "Sport", title: "Sideline Energy" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_9404.jpg", category: "Events", title: "Live Event Detail" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_9381.jpg", category: "Events", title: "Guest Arrival" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D4006.jpg", category: "Events", title: "Room Atmosphere" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D4155.jpg", category: "Weddings", title: "Ceremony Light" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D6186.jpg", category: "Weddings", title: "Reception Moment" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D2130.jpg", category: "Weddings", title: "Quiet Portrait" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D1639.jpg", category: "Portraits", title: "Editorial Portrait" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D0070.jpg", category: "Portraits", title: "Studio Energy" },
+  { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_69101.jpg", category: "Portraits", title: "Natural Frame" },
+];
+
+const galleryFilters = ["All", "Sport", "Weddings", "Events", "Portraits"];
+
+const services = [
+  {
+    title: "Sports Coverage",
+    description: "Sharp, fast-paced coverage for clubs, teams, tournaments, and individual athletes.",
+    includes: ["Pre-game details", "Action coverage", "Edited gallery delivery", "Social-ready selects"],
+    price: "From $___",
+  },
+  {
+    title: "Wedding Packages",
+    description: "Premium wedding storytelling with clean direction, natural emotion, and cinematic edits.",
+    includes: ["Planning call", "Ceremony and portraits", "Reception coverage", "Private online gallery"],
+    price: "From $___",
+  },
+  {
+    title: "Event Photography",
+    description: "Polished event coverage built for brands, venues, communities, and milestone moments.",
+    includes: ["Arrival and detail shots", "Candid guest coverage", "Key moments", "Fast preview delivery"],
+    price: "From $___",
+  },
+  {
+    title: "Social Media Content",
+    description: "High-impact images designed for launches, campaigns, athletes, creators, and teams.",
+    includes: ["Shot list planning", "Vertical-first selects", "Fast edit turnaround", "Usage-ready exports"],
+    price: "From $___",
+  },
+  {
+    title: "Highlight Reels",
+    description: "Short-form motion coverage for sport, events, weddings, and behind-the-scenes stories.",
+    includes: ["Vertical video capture", "Music-led edit", "Caption-safe framing", "Platform-ready export"],
+    price: "From $___",
+  },
+];
+
+const testimonials = [
+  {
+    quote: "The photos felt premium without losing the real energy of the day. Every important moment was covered.",
+    name: "Client Name",
+    detail: "Wedding booking",
+  },
+  {
+    quote: "Fast turnaround, clean edits, and exactly the kind of action shots our club needed for socials.",
+    name: "Client Name",
+    detail: "Sports coverage",
+  },
+  {
+    quote: "Professional, calm, and sharp. The event gallery looked cohesive from start to finish.",
+    name: "Client Name",
+    detail: "Private event",
+  },
+];
+
+const contactLinks = [
+  { label: "Email", value: "hello@drobbmedia.com", href: "mailto:hello@drobbmedia.com" },
+  { label: "Instagram", value: "@drobbmedia", href: "https://instagram.com/drobbmedia" },
+  { label: "Phone", value: "+61 ___ ___ ___", href: "tel:+61000000000" },
+];
+
+const e = React.createElement;
+
+function SectionHeading({ eyebrow, title, text, align = "left" }) {
+  return e(
+    motion.div,
+    {
+      className: `section-heading ${align === "center" ? "mx-auto text-center" : ""}`,
+      initial: { opacity: 0, y: 28 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true, margin: "-80px" },
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
+    e("p", { className: "eyebrow" }, eyebrow),
+    e("h2", null, title),
+    text ? e("p", { className: "section-copy" }, text) : null,
+  );
+}
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  return e(
+    "header",
+    { className: `navbar ${scrolled ? "navbar-solid" : ""}` },
+    e("a", { href: "#top", className: "brand", onClick: () => setOpen(false) }, "DRobbMedia"),
+    e(
+      "button",
+      {
+        className: "nav-toggle",
+        type: "button",
+        "aria-label": "Toggle navigation",
+        "aria-expanded": open,
+        onClick: () => setOpen((value) => !value),
+      },
+      e("span", null),
+      e("span", null),
+    ),
+    e(
+      "nav",
+      { className: `nav-links ${open ? "nav-open" : ""}`, "aria-label": "Primary navigation" },
+      navItems.map((item) =>
+        e("a", { key: item.href, href: item.href, onClick: () => setOpen(false) }, item.label),
+      ),
+    ),
+  );
+}
+
+function Loader() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setVisible(false), 900);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  return e(
+    AnimatePresence,
+    null,
+    visible
+      ? e(
+          motion.div,
+          {
+            className: "loader",
+            initial: { opacity: 1 },
+            exit: { opacity: 0, transition: { duration: 0.55 } },
+          },
+          e(motion.div, {
+            className: "loader-line",
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+          }),
+          e("p", null, "DRobbMedia"),
+        )
+      : null,
+  );
+}
+
+function Hero() {
+  const [index, setIndex] = useState(0);
+  const { scrollY } = useScroll();
+  const imageY = useTransform(scrollY, [0, 900], [0, 140]);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setIndex((value) => (value + 1) % heroSlides.length);
+    }, 5200);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return e(
+    "section",
+    { id: "top", className: "hero-section" },
+    e(
+      "div",
+      { className: "hero-media", "aria-hidden": "true" },
+      e(
+        AnimatePresence,
+        { mode: "wait" },
+        e(motion.img, {
+          key: heroSlides[index].src,
+          src: heroSlides[index].src,
+          alt: "",
+          className: "hero-image",
+          style: { y: imageY },
+          initial: { opacity: 0, scale: 1.04 },
+          animate: { opacity: 1, scale: 1 },
+          exit: { opacity: 0, scale: 1.02 },
+          transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+        }),
+      ),
+    ),
+    e("div", { className: "hero-overlay" }),
+    e(
+      motion.div,
+      {
+        className: "hero-content",
+        initial: "hidden",
+        animate: "visible",
+        variants: {
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.12, delayChildren: 0.25 } },
+        },
+      },
+      e(
+        motion.div,
+        {
+          variants: {
+            hidden: { y: 36, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+          },
+        },
+        e("h1", null, "DRobbMedia"),
+      ),
+      e(
+        motion.p,
+        {
+          className: "hero-tagline",
+          variants: {
+            hidden: { y: 30, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+          },
+        },
+        "Sports, Events & Wedding Photography",
+      ),
+      e(
+        motion.p,
+        {
+          className: "hero-intro",
+          variants: {
+            hidden: { y: 28, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+          },
+        },
+        "Cinematic coverage for fast-moving sport, live events, and wedding moments that deserve to feel as powerful as they looked.",
+      ),
+      e(
+        motion.div,
+        {
+          className: "hero-actions",
+          variants: {
+            hidden: { y: 20, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+          },
+        },
+        e("a", { className: "btn btn-light", href: "#portfolio" }, "View Portfolio"),
+        e("a", { className: "btn btn-dark", href: "#contact" }, "Book a Shoot"),
+      ),
+    ),
+    e("a", { href: "#about", className: "scroll-indicator", "aria-label": "Scroll to about section" }, e("span", null)),
+  );
+}
+
+function About() {
+  return e(
+    "section",
+    { id: "about", className: "section about-section" },
+    e(
+      "div",
+      { className: "site-grid about-grid" },
+      e(
+        "div",
+        null,
+        e(SectionHeading, {
+          eyebrow: "About",
+          title: "Fast when it matters. Quiet when the moment needs space.",
+          text:
+            "DRobbMedia captures fast-paced sport, live events, and wedding stories with a cinematic, professional style. The work is built around movement, atmosphere, and clean emotion.",
+        }),
+        e("div", { className: "about-stats" }, e("span", null, "Sport"), e("span", null, "Events"), e("span", null, "Weddings")),
+      ),
+      e(
+        motion.div,
+        {
+          className: "portrait-frame",
+          initial: { opacity: 0, y: 40 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-80px" },
+          transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+        },
+        e("img", { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/unnamed.jpg", alt: "DRobbMedia portrait placeholder" }),
+        e("div", { className: "portrait-caption" }, "Replace with your portrait or behind-the-camera image"),
+      ),
+    ),
+  );
+}
+
+function ImageCard({ item, large = false }) {
+  return e(
+    motion.article,
+    {
+      className: `image-card ${large ? "image-card-large" : ""}`,
+      initial: { opacity: 0, y: 30 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true, margin: "-70px" },
+      transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+    e("img", { src: item.src, alt: `${item.title} photography placeholder`, loading: "lazy" }),
+    e("div", { className: "card-shade" }),
+    e(
+      "div",
+      { className: "image-card-copy" },
+      e("h3", null, item.title),
+      item.description ? e("p", null, item.description) : e("p", null, item.category),
+      e("a", { href: "#galleries" }, "View Gallery"),
+    ),
+  );
+}
+
+function PortfolioCategories() {
+  return e(
+    "section",
+    { id: "portfolio", className: "section section-black" },
+    e(
+      "div",
+      { className: "site-container" },
+      e(SectionHeading, {
+        eyebrow: "Portfolio",
+        title: "Coverage with atmosphere, pace, and polish.",
+        text: "Five clear lanes for the work you will replace with final DRobbMedia galleries when ready.",
+      }),
+      e(
+        "div",
+        { className: "portfolio-grid" },
+        portfolioCategories.map((item, index) => e(ImageCard, { key: item.title, item, large: index === 0 })),
+      ),
+    ),
+  );
+}
+
+function GalleryGrid() {
+  const [active, setActive] = useState("All");
+  const visibleImages = useMemo(
+    () => (active === "All" ? galleryImages : galleryImages.filter((image) => image.category === active)),
+    [active],
+  );
+
+  return e(
+    "section",
+    { id: "galleries", className: "section gallery-section" },
+    e(
+      "div",
+      { className: "site-container" },
+      e(SectionHeading, {
+        eyebrow: "Featured Galleries",
+        title: "A flexible image system for sport, weddings, events, and portraits.",
+        text: "Filter the placeholders now, then swap the image paths in one data file later.",
+        align: "center",
+      }),
+      e(
+        "div",
+        { className: "filter-row", role: "tablist", "aria-label": "Gallery filters" },
+        galleryFilters.map((filter) =>
+          e(
+            "button",
+            {
+              key: filter,
+              type: "button",
+              className: active === filter ? "filter-button filter-active" : "filter-button",
+              onClick: () => setActive(filter),
+            },
+            filter,
+          ),
+        ),
+      ),
+      e(
+        motion.div,
+        { className: "gallery-grid", layout: true },
+        e(
+          AnimatePresence,
+          null,
+          visibleImages.map((image, index) =>
+            e(
+              motion.figure,
+              {
+                key: image.src + active,
+                className: `gallery-item span-${(index % 5) + 1}`,
+                layout: true,
+                initial: { opacity: 0, y: 24, scale: 0.98 },
+                animate: { opacity: 1, y: 0, scale: 1 },
+                exit: { opacity: 0, y: 16, scale: 0.98 },
+                transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+              },
+              e("img", { src: image.src, alt: `${image.title} placeholder`, loading: "lazy" }),
+              e("figcaption", null, e("span", null, image.category), image.title),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+function Services() {
+  return e(
+    "section",
+    { id: "services", className: "section section-black services-section" },
+    e(
+      "div",
+      { className: "site-container" },
+      e(SectionHeading, {
+        eyebrow: "Services",
+        title: "Premium coverage, built around the day.",
+        text: "Simple package lanes with room to refine pricing once your final offer is locked.",
+      }),
+      e(
+        "div",
+        { className: "services-grid" },
+        services.map((service) =>
+          e(
+            motion.article,
+            {
+              key: service.title,
+              className: "service-card",
+              initial: { opacity: 0, y: 26 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+            },
+            e("div", null, e("h3", null, service.title), e("p", null, service.description)),
+            e("ul", null, service.includes.map((item) => e("li", { key: item }, item))),
+            e("div", { className: "service-footer" }, e("strong", null, service.price), e("a", { href: "#contact" }, "Enquire")),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+function Testimonials() {
+  return e(
+    "section",
+    { className: "section testimonials-section" },
+    e(
+      "div",
+      { className: "site-container" },
+      e(SectionHeading, {
+        eyebrow: "Testimonials",
+        title: "Placeholder reviews with the right tone.",
+        text: "Replace these once you have real client feedback.",
+        align: "center",
+      }),
+      e(
+        "div",
+        { className: "testimonial-grid" },
+        testimonials.map((testimonial) =>
+          e(
+            motion.article,
+            {
+              key: testimonial.detail,
+              className: "testimonial-card",
+              initial: { opacity: 0, y: 28 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-80px" },
+              transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+            },
+            e("p", null, `"${testimonial.quote}"`),
+            e("div", null, e("strong", null, testimonial.name), e("span", null, testimonial.detail)),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+function ContactForm() {
+  return e(
+    "section",
+    { id: "contact", className: "section contact-section" },
+    e(
+      "div",
+      { className: "site-grid contact-grid" },
+      e(
+        "div",
+        null,
+        e(SectionHeading, {
+          eyebrow: "Book a Shoot",
+          title: "Tell me what you need covered.",
+          text: "Use this enquiry form as the front door for weddings, sport, events, portraits, and content shoots.",
+        }),
+        e(
+          "div",
+          { className: "contact-links" },
+          contactLinks.map((link) =>
+            e("a", { key: link.label, href: link.href }, e("span", null, link.label), e("strong", null, link.value)),
+          ),
+        ),
+      ),
+      e(
+        "form",
+        {
+          className: "contact-form",
+          action: "mailto:hello@drobbmedia.com",
+          method: "post",
+          encType: "text/plain",
+        },
+        e("label", null, "Name", e("input", { name: "name", type: "text", placeholder: "Your name", required: true })),
+        e("label", null, "Email", e("input", { name: "email", type: "email", placeholder: "you@example.com", required: true })),
+        e("label", null, "Phone", e("input", { name: "phone", type: "tel", placeholder: "+61 ..." })),
+        e(
+          "label",
+          null,
+          "Shoot type",
+          e(
+            "select",
+            { name: "shootType", defaultValue: "Sports Coverage" },
+            ["Sports Coverage", "Wedding Photography", "Event Photography", "Portraits", "Social Media Content", "Highlight Reels"].map((option) =>
+              e("option", { key: option, value: option }, option),
+            ),
+          ),
+        ),
+        e("label", null, "Event date", e("input", { name: "eventDate", type: "date" })),
+        e("label", null, "Location", e("input", { name: "location", type: "text", placeholder: "Suburb, venue, or ground" })),
+        e("label", { className: "full" }, "Message", e("textarea", { name: "message", rows: 5, placeholder: "Share the date, coverage needs, and anything I should know." })),
+        e("button", { className: "btn btn-light full", type: "submit" }, "Submit Enquiry"),
+      ),
+    ),
+  );
+}
+
+function Footer() {
+  return e(
+    "footer",
+    { className: "footer" },
+    e("a", { href: "#top", className: "brand" }, "DRobbMedia"),
+    e("nav", { "aria-label": "Footer navigation" }, navItems.map((item) => e("a", { key: item.href, href: item.href }, item.label))),
+    e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:hello@drobbmedia.com" }, "Email")),
+    e("p", null, `Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.`),
+  );
+}
+
+function App() {
+  return e(
+    React.Fragment,
+    null,
+    e(Loader),
+    e(Navbar),
+    e("main", null, e(Hero), e(About), e(PortfolioCategories), e(GalleryGrid), e(Services), e(Testimonials), e(ContactForm)),
+    e(Footer),
+  );
+}
+
+createRoot(document.getElementById("root")).render(e(App));
+
+    </script>
   </body>
 </html>
