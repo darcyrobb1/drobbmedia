@@ -7,7 +7,7 @@
     <meta name="description" content="DRobbMedia captures sport, events, weddings, portraits, and highlight reels with a cinematic, premium photography style." />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://drobbmedia.com.au/" />
-    <link rel="icon" href="https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/drobbmedia-logo.png" type="image/png" />
     <link rel="preconnect" href="https://esm.sh" />
     <style>
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
@@ -109,10 +109,25 @@ textarea {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.55rem, 2.4vw, 2.25rem);
   font-weight: 500;
   line-height: 1;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.navbar-solid .brand-logo {
+  width: 36px;
+  height: 36px;
 }
 
 .nav-links {
@@ -204,6 +219,13 @@ textarea {
   position: relative;
   z-index: 2;
   width: min(940px, 100%);
+}
+
+.hero-logo {
+  display: block;
+  width: clamp(86px, 13vw, 154px);
+  height: auto;
+  margin: 0 0 24px;
 }
 
 .hero-content h1 {
@@ -760,6 +782,10 @@ textarea {
 }
 
 @media (max-width: 900px) {
+  .brand span {
+    display: none;
+  }
+
   .nav-toggle {
     display: block;
   }
@@ -1016,6 +1042,7 @@ const contactLinks = [
 ];
 
 const e = React.createElement;
+const logoSrc = "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/drobbmedia-logo.png";
 
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
@@ -1047,7 +1074,12 @@ function Navbar() {
   return e(
     "header",
     { className: `navbar ${scrolled ? "navbar-solid" : ""}` },
-    e("a", { href: "#top", className: "brand", onClick: () => setOpen(false) }, "DRobbMedia"),
+    e(
+      "a",
+      { href: "#top", className: "brand", onClick: () => setOpen(false), "aria-label": "DRobbMedia home" },
+      e("img", { src: logoSrc, alt: "", className: "brand-logo" }),
+      e("span", null, "DRobbMedia"),
+    ),
     e(
       "button",
       {
@@ -1155,6 +1187,7 @@ function Hero() {
             visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
           },
         },
+        e("img", { src: logoSrc, alt: "DRobbMedia logo", className: "hero-logo" }),
         e("h1", null, "DRobbMedia"),
       ),
       e(
@@ -1467,7 +1500,12 @@ function Footer() {
   return e(
     "footer",
     { className: "footer" },
-    e("a", { href: "#top", className: "brand" }, "DRobbMedia"),
+    e(
+      "a",
+      { href: "#top", className: "brand", "aria-label": "DRobbMedia home" },
+      e("img", { src: logoSrc, alt: "", className: "brand-logo" }),
+      e("span", null, "DRobbMedia"),
+    ),
     e("nav", { "aria-label": "Footer navigation" }, navItems.map((item) => e("a", { key: item.href, href: item.href }, item.label))),
     e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:hello@drobbmedia.com" }, "Email")),
     e("p", null, `Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.`),
