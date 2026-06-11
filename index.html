@@ -1,90 +1,48 @@
 <!doctype html>
 <html lang="en-AU">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DRobbMedia | Melbourne Photography</title>
-    <meta name="description" content="DRobbMedia is a Melbourne photography studio capturing sport, events, portraits, and editorial stories with cinematic energy.">
-    <meta name="keywords" content="DRobbMedia, Melbourne photographer, sports photography, event photography, portrait photography, photography prints">
-    <meta name="author" content="DRobbMedia">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://drobbmedia.com.au/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="DRobbMedia | Melbourne Photography">
-    <meta property="og:description" content="Sport, event, and portrait photography built around atmosphere, movement, and clean visual storytelling.">
-    <meta property="og:image" content="https://drobbmedia.com.au/assets/photos/RL1D2168.jpg">
-    <meta property="og:url" content="https://drobbmedia.com.au/">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/styles.css">
-    <script type="application/ld+json">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DRobbMedia | Sports, Events & Wedding Photography</title>
+    <meta
+      name="description"
+      content="DRobbMedia captures sport, events, weddings, portraits, and social content with a cinematic, premium photography style."
+    />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://drobbmedia.com.au/" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <link rel="preconnect" href="https://esm.sh" />
+    <script>
+      tailwind = {
+        config: {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                serif: ["Cormorant Garamond", "Georgia", "serif"],
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
       {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "DRobbMedia",
-        "url": "https://drobbmedia.com.au/",
-        "image": "https://drobbmedia.com.au/assets/photos/RL1D2168.jpg",
-        "description": "Melbourne photography for sport, events, portraits, and editorial stories.",
-        "areaServed": "Melbourne, Victoria, Australia",
-        "serviceType": ["Sports photography", "Event photography", "Portrait photography", "Photography prints"]
+        "imports": {
+          "@vite/client": "data:text/javascript,",
+          "react": "https://esm.sh/react@18.3.1",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+          "framer-motion": "https://esm.sh/framer-motion@11.18.2?external=react"
+        }
       }
     </script>
+    <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="DRobbMedia home">DRobbMedia</a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="contact.html">Pricing</a>
-      </nav>
-    </header>
-
-    <main id="main">
-      <section class="hero">
-        <div class="hero-media">
-          <img src="assets/photos/RL1D2168.jpg" alt="DRobbMedia action photography in warm stadium light" width="1000" height="1250" fetchpriority="high">
-        </div>
-      </section>
-
-      <section class="intro section-wrap" id="about">
-        <div>
-          <p class="eyebrow">Visual storytelling</p>
-          <h2>Clean frames, real energy, fast delivery.</h2>
-        </div>
-      </section>
-
-      <section class="feature-grid section-wrap" aria-label="Photography services">
-        <a class="feature-card" href="galleries.html#sport">
-          <img src="assets/photos/RL1D0607.jpg" alt="Sports portrait photographed by DRobbMedia" width="1000" height="1500" loading="lazy">
-          <span>Sport</span>
-        </a>
-        <a class="feature-card" href="galleries.html#events">
-          <img src="assets/photos/IMG_9404.jpg" alt="Event photography detail by DRobbMedia" width="1000" height="1500" loading="lazy">
-          <span>Events</span>
-        </a>
-        <a class="feature-card" href="galleries.html#portraits">
-          <img src="assets/photos/RL1D1639.jpg" alt="Portrait photography by DRobbMedia" width="1000" height="1500" loading="lazy">
-          <span>Commercial</span>
-        </a>
-      </section>
-
-      <section class="quote-band">
-        <p>Photography that keeps the feeling intact.</p>
-      </section>
-
-    </main>
-
-    <footer class="site-footer">
-      <p>© <span data-year></span> DRobbMedia</p>
-      <div>
-        <a href="#about">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="contact.html">Pricing</a>
-      </div>
-    </footer>
-    <script src="assets/main.js"></script>
+    <div id="root"></div>
+    <noscript>DRobbMedia requires JavaScript to display the full photography experience.</noscript>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
