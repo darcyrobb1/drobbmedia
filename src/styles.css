@@ -447,7 +447,7 @@ textarea {
 .portfolio-panel-copy h2 {
   margin: 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(4.4rem, 12vw, 12rem);
+  font-size: clamp(1.76rem, 4.8vw, 4.8rem);
   font-weight: 500;
   line-height: 0.85;
 }
