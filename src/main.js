@@ -200,7 +200,7 @@ function Hero() {
             visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
           },
         },
-        "Cinematic coverage for fast-moving sport, live events, and commercial projects that deserve to feel as powerful as they looked.",
+        "Cinematic coverage for fast-moving sport, high quality commercial photography for businesses, and capturing all types of events to last a lifetime.",
       ),
       e(
         motion.div,
