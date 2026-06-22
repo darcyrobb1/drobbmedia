@@ -5,34 +5,12 @@ import {
   contactLinks,
   heroSlides,
   navItems,
+  portfolioSections,
   services,
-  testimonials,
 } from "./data.js";
 
 const e = React.createElement;
 const logoSrc = "/assets/drobbmedia-logo.png";
-const portfolioSections = [
-  {
-    id: "portfolio-sports",
-    nextId: "portfolio-events",
-    number: "01",
-    title: "Sports",
-    text: "Action, emotion, pressure, and the moments that decide the game.",
-  },
-  {
-    id: "portfolio-events",
-    nextId: "portfolio-commercial",
-    number: "02",
-    title: "Events",
-    text: "Atmosphere, detail, people, and coverage built around the room.",
-  },
-  {
-    id: "portfolio-commercial",
-    number: "03",
-    title: "Commercial",
-    text: "Clean brand imagery for teams, people, products, and campaigns.",
-  },
-];
 
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
@@ -246,8 +224,8 @@ function About() {
           viewport: { once: true, margin: "-80px" },
           transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
         },
-        e("img", { src: "/assets/photos/unnamed.jpg", alt: "DRobbMedia portrait placeholder" }),
-        e("div", { className: "portrait-caption" }, "Replace with your portrait or behind-the-camera image"),
+        e("img", { src: "/assets/photos/commercial/RL1D1632.jpg", alt: "DRobbMedia commercial photography" }),
+        e("div", { className: "portrait-caption" }, "Commercial photography by DRobbMedia"),
       ),
     ),
   );
@@ -297,7 +275,24 @@ function PortfolioCategories() {
           e("h2", null, section.title),
           e("p", null, section.text),
         ),
-        e("div", { className: "portfolio-photo-grid", "aria-label": `${section.title} photos will appear here` }),
+        e(
+          "div",
+          { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
+          section.photos.map((photo, photoIndex) =>
+            e(
+              motion.figure,
+              {
+                key: photo,
+                className: "portfolio-photo-tile",
+                initial: { opacity: 0, y: 28 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, margin: "-80px" },
+                transition: { duration: 0.55, delay: Math.min(photoIndex, 5) * 0.04, ease: [0.22, 1, 0.36, 1] },
+              },
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
+            ),
+          ),
+        ),
         section.nextId
           ? e(
               "div",
@@ -340,42 +335,6 @@ function Services() {
             e("div", null, e("h3", null, service.title), e("p", null, service.description)),
             e("ul", null, service.includes.map((item) => e("li", { key: item }, item))),
             e("div", { className: "service-footer" }, e("strong", null, service.price), e("a", { href: "#contact" }, "Enquire")),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-function Testimonials() {
-  return e(
-    "section",
-    { className: "section testimonials-section" },
-    e(
-      "div",
-      { className: "site-container" },
-      e(SectionHeading, {
-        eyebrow: "Testimonials",
-        title: "Placeholder reviews with the right tone.",
-        text: "Replace these once you have real client feedback.",
-        align: "center",
-      }),
-      e(
-        "div",
-        { className: "testimonial-grid" },
-        testimonials.map((testimonial) =>
-          e(
-            motion.article,
-            {
-              key: testimonial.detail,
-              className: "testimonial-card",
-              initial: { opacity: 0, y: 28 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true, margin: "-80px" },
-              transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-            },
-            e("p", null, `"${testimonial.quote}"`),
-            e("div", null, e("strong", null, testimonial.name), e("span", null, testimonial.detail)),
           ),
         ),
       ),
@@ -460,7 +419,7 @@ function App() {
     null,
     e(Loader),
     e(Navbar),
-    e("main", null, e(Hero), e(PortfolioCategories), e(Services), e(Testimonials), e(About), e(ContactForm)),
+    e("main", null, e(Hero), e(PortfolioCategories), e(Services), e(About), e(ContactForm)),
     e(Footer),
   );
 }
