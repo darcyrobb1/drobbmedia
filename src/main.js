@@ -21,6 +21,14 @@ function shuffled(items) {
   return next;
 }
 
+function paired(items) {
+  const pairs = [];
+  for (let index = 0; index < items.length; index += 2) {
+    pairs.push(items.slice(index, index + 2));
+  }
+  return pairs;
+}
+
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
     motion.div,
@@ -274,18 +282,24 @@ function PortfolioPanel({ section }) {
     e(
       "div",
       { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
-      photos.map((photo, photoIndex) =>
+      paired(photos).map((photoPair, pairIndex) =>
         e(
-          motion.figure,
+          motion.div,
           {
-            key: photo,
-            className: "portfolio-photo-tile",
+            key: photoPair.join("|"),
+            className: "portfolio-photo-pair",
             initial: { opacity: 0, y: 42, scale: 0.96 },
             whileInView: { opacity: 1, y: 0, scale: 1 },
             viewport: { once: true, margin: "-80px" },
-            transition: { duration: 0.7, delay: Math.min(photoIndex, 5) * 0.05, ease: [0.16, 1, 0.3, 1] },
+            transition: { duration: 0.7, delay: Math.min(pairIndex, 5) * 0.05, ease: [0.16, 1, 0.3, 1] },
           },
-          e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
+          photoPair.map((photo, offset) =>
+            e(
+              "figure",
+              { key: photo, className: "portfolio-photo-tile" },
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * 2 + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
+            ),
+          ),
         ),
       ),
     ),

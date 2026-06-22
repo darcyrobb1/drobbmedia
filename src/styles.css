@@ -496,8 +496,17 @@ textarea {
   background: var(--black);
 }
 
-.portfolio-photo-tile {
+.portfolio-photo-pair {
   min-height: 100svh;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.6vw, 22px);
+  margin: 0;
+  padding: clamp(10px, 1.6vw, 22px);
+}
+
+.portfolio-photo-tile {
+  min-height: 0;
   margin: 0;
   overflow: hidden;
   border-radius: 0;
@@ -867,6 +876,13 @@ textarea {
     min-height: 100svh;
     grid-template-columns: 1fr;
     grid-auto-rows: 100svh;
+  }
+
+  .portfolio-photo-pair {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
   }
 
   .footer {

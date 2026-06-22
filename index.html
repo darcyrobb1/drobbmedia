@@ -518,8 +518,17 @@ textarea {
   background: var(--black);
 }
 
-.portfolio-photo-tile {
+.portfolio-photo-pair {
   min-height: 100svh;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.6vw, 22px);
+  margin: 0;
+  padding: clamp(10px, 1.6vw, 22px);
+}
+
+.portfolio-photo-tile {
+  min-height: 0;
   margin: 0;
   overflow: hidden;
   border-radius: 0;
@@ -891,6 +900,13 @@ textarea {
     grid-auto-rows: 100svh;
   }
 
+  .portfolio-photo-pair {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+
   .footer {
     grid-template-columns: 1fr;
   }
@@ -1003,22 +1019,6 @@ const heroSlides = [
     src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
     title: "Sports photography",
   },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1584.jpg",
-    title: "Commercial photography",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1632.jpg",
-    title: "Commercial detail",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/1-RL1D2680.jpg",
-    title: "Event coverage",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/RL1D3499.jpg",
-    title: "Event atmosphere",
-  },
 ];
 
 const services = [
@@ -1064,6 +1064,14 @@ function shuffled(items) {
     [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
   }
   return next;
+}
+
+function paired(items) {
+  const pairs = [];
+  for (let index = 0; index < items.length; index += 2) {
+    pairs.push(items.slice(index, index + 2));
+  }
+  return pairs;
 }
 const portfolioSections = [
   {
@@ -1393,18 +1401,24 @@ function PortfolioPanel({ section }) {
     e(
       "div",
       { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
-      photos.map((photo, photoIndex) =>
+      paired(photos).map((photoPair, pairIndex) =>
         e(
-          motion.figure,
+          motion.div,
           {
-            key: photo,
-            className: "portfolio-photo-tile",
+            key: photoPair.join("|"),
+            className: "portfolio-photo-pair",
             initial: { opacity: 0, y: 42, scale: 0.96 },
             whileInView: { opacity: 1, y: 0, scale: 1 },
             viewport: { once: true, margin: "-80px" },
-            transition: { duration: 0.7, delay: Math.min(photoIndex, 5) * 0.05, ease: [0.16, 1, 0.3, 1] },
+            transition: { duration: 0.7, delay: Math.min(pairIndex, 5) * 0.05, ease: [0.16, 1, 0.3, 1] },
           },
-          e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
+          photoPair.map((photo, offset) =>
+            e(
+              "figure",
+              { key: photo, className: "portfolio-photo-tile" },
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * 2 + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
+            ),
+          ),
         ),
       ),
     ),

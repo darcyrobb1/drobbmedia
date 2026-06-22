@@ -30,22 +30,6 @@ export const heroSlides = [
     src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
     title: "Sports photography",
   },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1584.jpg",
-    title: "Commercial photography",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1632.jpg",
-    title: "Commercial detail",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/1-RL1D2680.jpg",
-    title: "Event coverage",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/RL1D3499.jpg",
-    title: "Event atmosphere",
-  },
 ];
 
 export const portfolioSections = [
