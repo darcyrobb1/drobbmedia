@@ -11,16 +11,115 @@ export const navItems = [
 
 export const heroSlides = [
   {
-    src: "/assets/generated/drobbmedia-hero-placeholder.png",
-    title: "Cinematic photography placeholder",
+    src: "/assets/photos/sport/RL1D0016.jpg",
+    title: "Sport action",
   },
   {
-    src: "/assets/photos/RL1D2168.jpg",
-    title: "Sport action placeholder",
+    src: "/assets/photos/sport/RL1D2138.jpg",
+    title: "Sport coverage",
   },
   {
-    src: "/assets/photos/IMG_9404.jpg",
-    title: "Event atmosphere placeholder",
+    src: "/assets/photos/sport/RL1D3987.jpg",
+    title: "Sport intensity",
+  },
+  {
+    src: "/assets/photos/sport/RL1D4995.jpg",
+    title: "Matchday moment",
+  },
+  {
+    src: "/assets/photos/sport/RL1D9987.jpg",
+    title: "Sports photography",
+  },
+  {
+    src: "/assets/photos/commercial/RL1D1584.jpg",
+    title: "Commercial photography",
+  },
+  {
+    src: "/assets/photos/commercial/RL1D1632.jpg",
+    title: "Commercial detail",
+  },
+  {
+    src: "/assets/photos/event/1-RL1D2680.jpg",
+    title: "Event coverage",
+  },
+  {
+    src: "/assets/photos/event/RL1D3499.jpg",
+    title: "Event atmosphere",
+  },
+];
+
+export const portfolioSections = [
+  {
+    id: "portfolio-sports",
+    nextId: "portfolio-events",
+    number: "01",
+    title: "Sports",
+    text: "Action, emotion, pressure, and the moments that decide the game.",
+    photos: [
+      "/assets/photos/sport/IMG_1435.jpg",
+      "/assets/photos/sport/RL1D0016.jpg",
+      "/assets/photos/sport/RL1D0146 copy.JPG",
+      "/assets/photos/sport/RL1D0453.JPG",
+      "/assets/photos/sport/RL1D0583.JPG",
+      "/assets/photos/sport/RL1D0904.JPG",
+      "/assets/photos/sport/RL1D2138.jpg",
+      "/assets/photos/sport/RL1D2355.jpg",
+      "/assets/photos/sport/RL1D2589.jpg",
+      "/assets/photos/sport/RL1D3987.jpg",
+      "/assets/photos/sport/RL1D4012.jpg",
+      "/assets/photos/sport/RL1D4085.JPG",
+      "/assets/photos/sport/RL1D4371.JPG",
+      "/assets/photos/sport/RL1D4598.jpg",
+      "/assets/photos/sport/RL1D4836.JPG",
+      "/assets/photos/sport/RL1D4995.jpg",
+      "/assets/photos/sport/RL1D5032.jpg",
+      "/assets/photos/sport/RL1D5141.JPG",
+      "/assets/photos/sport/RL1D5520.JPG",
+      "/assets/photos/sport/RL1D5824 copy.jpg",
+      "/assets/photos/sport/RL1D5912 copy.jpg",
+      "/assets/photos/sport/RL1D8789.JPG",
+      "/assets/photos/sport/RL1D9987.jpg",
+    ],
+  },
+  {
+    id: "portfolio-events",
+    nextId: "portfolio-commercial",
+    number: "02",
+    title: "Events",
+    text: "Atmosphere, detail, people, and coverage built around the room.",
+    photos: [
+      "/assets/photos/event/1-RL1D2680.jpg",
+      "/assets/photos/event/1-RL1D3082.jpg",
+      "/assets/photos/event/11-RL1D3523.jpg",
+      "/assets/photos/event/7-RL1D3374.jpg",
+      "/assets/photos/event/8-RL1D3414.jpg",
+      "/assets/photos/event/DSC00269.JPG",
+      "/assets/photos/event/DSC00326.JPG",
+      "/assets/photos/event/IMG_0172.JPG",
+      "/assets/photos/event/IMG_1148.JPG",
+      "/assets/photos/event/IMG_1580.JPG",
+      "/assets/photos/event/IMG_1709.JPG",
+      "/assets/photos/event/IMG_1775.JPG",
+      "/assets/photos/event/IMG_9731.jpg",
+      "/assets/photos/event/RL1D3419.jpg",
+      "/assets/photos/event/RL1D3499.jpg",
+    ],
+  },
+  {
+    id: "portfolio-commercial",
+    number: "03",
+    title: "Commercial",
+    text: "Clean brand imagery for teams, people, products, and campaigns.",
+    photos: [
+      "/assets/photos/commercial/IMG_2253.JPG",
+      "/assets/photos/commercial/RL1D1584.jpg",
+      "/assets/photos/commercial/RL1D1610.jpg",
+      "/assets/photos/commercial/RL1D1632.jpg",
+      "/assets/photos/commercial/RL1D2381.JPG",
+      "/assets/photos/commercial/RL1D2406.JPG",
+      "/assets/photos/commercial/RL1D2425.JPG",
+      "/assets/photos/commercial/RL1D2430.JPG",
+    ],
   },
 ];
 
@@ -48,24 +147,6 @@ export const services = [
     description: "Short-form motion coverage for sport, events, weddings, and behind-the-scenes stories.",
     includes: ["Vertical video capture", "Music-led edit", "Caption-safe framing", "Platform-ready export"],
     price: "From $___",
-  },
-];
-
-export const testimonials = [
-  {
-    quote: "The photos felt premium without losing the real energy of the day. Every important moment was covered.",
-    name: "Client Name",
-    detail: "Wedding booking",
-  },
-  {
-    quote: "Fast turnaround, clean edits, and exactly the kind of action shots our club needed for socials.",
-    name: "Client Name",
-    detail: "Sports coverage",
-  },
-  {
-    quote: "Professional, calm, and sharp. The event gallery looked cohesive from start to finish.",
-    name: "Client Name",
-    detail: "Private event",
   },
 ];
 
