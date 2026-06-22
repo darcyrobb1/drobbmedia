@@ -9,6 +9,16 @@
     <link rel="canonical" href="https://drobbmedia.com.au/" />
     <link rel="icon" href="https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/drobbmedia-logo.png" type="image/png" />
     <link rel="preconnect" href="https://esm.sh" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.3.1",
+          "react-dom": "https://esm.sh/react-dom@18.3.1",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+          "framer-motion": "https://esm.sh/framer-motion@11.18.2?external=react,react-dom"
+        }
+      }
+    </script>
     <style>
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
 
@@ -376,7 +386,6 @@ textarea {
 
 .about-section,
 .gallery-section,
-.testimonials-section,
 .contact-section {
   color: var(--ink);
   background: var(--paper);
@@ -384,7 +393,6 @@ textarea {
 
 .about-section .section-copy,
 .gallery-section .section-copy,
-.testimonials-section .section-copy,
 .contact-section .section-copy {
   color: rgba(18, 18, 18, 0.66);
 }
@@ -457,17 +465,18 @@ textarea {
 }
 
 .portfolio-panel-copy h2 {
-  margin: 0;
+  margin: 8px 0 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(1.76rem, 4.8vw, 4.8rem);
+  font-size: clamp(0.88rem, 2.4vw, 2.4rem);
   font-weight: 500;
-  line-height: 0.85;
+  line-height: 1.08;
 }
 
 .portfolio-panel-copy > p:last-child {
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   color: rgba(244, 244, 241, 0.7);
   font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.5;
 }
 
 .portfolio-photo-grid {
@@ -484,6 +493,25 @@ textarea {
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     rgba(255, 255, 255, 0.02);
   background-size: 32px 32px;
+}
+
+.portfolio-photo-tile {
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.portfolio-photo-tile:nth-child(6n + 1),
+.portfolio-photo-tile:nth-child(6n + 5) {
+  grid-row: span 2;
+}
+
+.portfolio-photo-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .portfolio-scroll-trigger {
@@ -681,40 +709,6 @@ textarea {
   text-transform: uppercase;
 }
 
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.testimonial-card {
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 26px;
-  border: 1px solid var(--dark-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.testimonial-card p {
-  margin: 0;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(1.65rem, 2.7vw, 2.45rem);
-  line-height: 1.02;
-}
-
-.testimonial-card strong,
-.testimonial-card span {
-  display: block;
-}
-
-.testimonial-card span {
-  margin-top: 4px;
-  color: rgba(18, 18, 18, 0.56);
-}
-
 .contact-grid {
   align-items: start;
 }
@@ -878,10 +872,6 @@ textarea {
     grid-auto-rows: minmax(180px, 28vh);
   }
 
-  .testimonial-grid {
-    grid-template-columns: 1fr;
-  }
-
   .footer {
     grid-template-columns: 1fr;
   }
@@ -975,16 +965,40 @@ const navItems = [
 
 const heroSlides = [
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/generated/drobbmedia-hero-placeholder.png",
-    title: "Cinematic photography placeholder",
+    src: "/assets/photos/sport/RL1D0016.jpg",
+    title: "Sport action",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/RL1D2168.jpg",
-    title: "Sport action placeholder",
+    src: "/assets/photos/sport/RL1D2138.jpg",
+    title: "Sport coverage",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/IMG_9404.jpg",
-    title: "Event atmosphere placeholder",
+    src: "/assets/photos/sport/RL1D3987.jpg",
+    title: "Sport intensity",
+  },
+  {
+    src: "/assets/photos/sport/RL1D4995.jpg",
+    title: "Matchday moment",
+  },
+  {
+    src: "/assets/photos/sport/RL1D9987.jpg",
+    title: "Sports photography",
+  },
+  {
+    src: "/assets/photos/commercial/RL1D1584.jpg",
+    title: "Commercial photography",
+  },
+  {
+    src: "/assets/photos/commercial/RL1D1632.jpg",
+    title: "Commercial detail",
+  },
+  {
+    src: "/assets/photos/event/1-RL1D2680.jpg",
+    title: "Event coverage",
+  },
+  {
+    src: "/assets/photos/event/RL1D3499.jpg",
+    title: "Event atmosphere",
   },
 ];
 
@@ -1015,24 +1029,6 @@ const services = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "The photos felt premium without losing the real energy of the day. Every important moment was covered.",
-    name: "Client Name",
-    detail: "Wedding booking",
-  },
-  {
-    quote: "Fast turnaround, clean edits, and exactly the kind of action shots our club needed for socials.",
-    name: "Client Name",
-    detail: "Sports coverage",
-  },
-  {
-    quote: "Professional, calm, and sharp. The event gallery looked cohesive from start to finish.",
-    name: "Client Name",
-    detail: "Private event",
-  },
-];
-
 const contactLinks = [
   { label: "Email", value: "hello@drobbmedia.com", href: "mailto:hello@drobbmedia.com" },
   { label: "Instagram", value: "@drobbmedia", href: "https://instagram.com/drobbmedia" },
@@ -1048,6 +1044,31 @@ const portfolioSections = [
     number: "01",
     title: "Sports",
     text: "Action, emotion, pressure, and the moments that decide the game.",
+    photos: [
+      "/assets/photos/sport/IMG_1435.jpg",
+      "/assets/photos/sport/RL1D0016.jpg",
+      "/assets/photos/sport/RL1D0146 copy.JPG",
+      "/assets/photos/sport/RL1D0453.JPG",
+      "/assets/photos/sport/RL1D0583.JPG",
+      "/assets/photos/sport/RL1D0904.JPG",
+      "/assets/photos/sport/RL1D2138.jpg",
+      "/assets/photos/sport/RL1D2355.jpg",
+      "/assets/photos/sport/RL1D2589.jpg",
+      "/assets/photos/sport/RL1D3987.jpg",
+      "/assets/photos/sport/RL1D4012.jpg",
+      "/assets/photos/sport/RL1D4085.JPG",
+      "/assets/photos/sport/RL1D4371.JPG",
+      "/assets/photos/sport/RL1D4598.jpg",
+      "/assets/photos/sport/RL1D4836.JPG",
+      "/assets/photos/sport/RL1D4995.jpg",
+      "/assets/photos/sport/RL1D5032.jpg",
+      "/assets/photos/sport/RL1D5141.JPG",
+      "/assets/photos/sport/RL1D5520.JPG",
+      "/assets/photos/sport/RL1D5824 copy.jpg",
+      "/assets/photos/sport/RL1D5912 copy.jpg",
+      "/assets/photos/sport/RL1D8789.JPG",
+      "/assets/photos/sport/RL1D9987.jpg",
+    ],
   },
   {
     id: "portfolio-events",
@@ -1055,12 +1076,39 @@ const portfolioSections = [
     number: "02",
     title: "Events",
     text: "Atmosphere, detail, people, and coverage built around the room.",
+    photos: [
+      "/assets/photos/event/1-RL1D2680.jpg",
+      "/assets/photos/event/1-RL1D3082.jpg",
+      "/assets/photos/event/11-RL1D3523.jpg",
+      "/assets/photos/event/7-RL1D3374.jpg",
+      "/assets/photos/event/8-RL1D3414.jpg",
+      "/assets/photos/event/DSC00269.JPG",
+      "/assets/photos/event/DSC00326.JPG",
+      "/assets/photos/event/IMG_0172.JPG",
+      "/assets/photos/event/IMG_1148.JPG",
+      "/assets/photos/event/IMG_1580.JPG",
+      "/assets/photos/event/IMG_1709.JPG",
+      "/assets/photos/event/IMG_1775.JPG",
+      "/assets/photos/event/IMG_9731.jpg",
+      "/assets/photos/event/RL1D3419.jpg",
+      "/assets/photos/event/RL1D3499.jpg",
+    ],
   },
   {
     id: "portfolio-commercial",
     number: "03",
     title: "Commercial",
     text: "Clean brand imagery for teams, people, products, and campaigns.",
+    photos: [
+      "/assets/photos/commercial/IMG_2253.JPG",
+      "/assets/photos/commercial/RL1D1584.jpg",
+      "/assets/photos/commercial/RL1D1610.jpg",
+      "/assets/photos/commercial/RL1D1632.jpg",
+      "/assets/photos/commercial/RL1D2381.JPG",
+      "/assets/photos/commercial/RL1D2406.JPG",
+      "/assets/photos/commercial/RL1D2425.JPG",
+      "/assets/photos/commercial/RL1D2430.JPG",
+    ],
   },
 ];
 
@@ -1276,8 +1324,8 @@ function About() {
           viewport: { once: true, margin: "-80px" },
           transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
         },
-        e("img", { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/unnamed.jpg", alt: "DRobbMedia portrait placeholder" }),
-        e("div", { className: "portrait-caption" }, "Replace with your portrait or behind-the-camera image"),
+        e("img", { src: "/assets/photos/commercial/RL1D1632.jpg", alt: "DRobbMedia commercial photography" }),
+        e("div", { className: "portrait-caption" }, "Commercial photography by DRobbMedia"),
       ),
     ),
   );
@@ -1327,7 +1375,24 @@ function PortfolioCategories() {
           e("h2", null, section.title),
           e("p", null, section.text),
         ),
-        e("div", { className: "portfolio-photo-grid", "aria-label": `${section.title} photos will appear here` }),
+        e(
+          "div",
+          { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
+          section.photos.map((photo, photoIndex) =>
+            e(
+              motion.figure,
+              {
+                key: photo,
+                className: "portfolio-photo-tile",
+                initial: { opacity: 0, y: 28 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, margin: "-80px" },
+                transition: { duration: 0.55, delay: Math.min(photoIndex, 5) * 0.04, ease: [0.22, 1, 0.36, 1] },
+              },
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
+            ),
+          ),
+        ),
         section.nextId
           ? e(
               "div",
@@ -1370,42 +1435,6 @@ function Services() {
             e("div", null, e("h3", null, service.title), e("p", null, service.description)),
             e("ul", null, service.includes.map((item) => e("li", { key: item }, item))),
             e("div", { className: "service-footer" }, e("strong", null, service.price), e("a", { href: "#contact" }, "Enquire")),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-function Testimonials() {
-  return e(
-    "section",
-    { className: "section testimonials-section" },
-    e(
-      "div",
-      { className: "site-container" },
-      e(SectionHeading, {
-        eyebrow: "Testimonials",
-        title: "Placeholder reviews with the right tone.",
-        text: "Replace these once you have real client feedback.",
-        align: "center",
-      }),
-      e(
-        "div",
-        { className: "testimonial-grid" },
-        testimonials.map((testimonial) =>
-          e(
-            motion.article,
-            {
-              key: testimonial.detail,
-              className: "testimonial-card",
-              initial: { opacity: 0, y: 28 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true, margin: "-80px" },
-              transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-            },
-            e("p", null, `"${testimonial.quote}"`),
-            e("div", null, e("strong", null, testimonial.name), e("span", null, testimonial.detail)),
           ),
         ),
       ),
@@ -1490,7 +1519,7 @@ function App() {
     null,
     e(Loader),
     e(Navbar),
-    e("main", null, e(Hero), e(PortfolioCategories), e(Services), e(Testimonials), e(About), e(ContactForm)),
+    e("main", null, e(Hero), e(PortfolioCategories), e(Services), e(About), e(ContactForm)),
     e(Footer),
   );
 }
