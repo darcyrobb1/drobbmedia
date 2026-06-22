@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import {
@@ -11,6 +11,15 @@ import {
 
 const e = React.createElement;
 const logoSrc = "/assets/drobbmedia-logo.png";
+
+function shuffled(items) {
+  const next = [...items];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
+}
 
 function SectionHeading({ eyebrow, title, text, align = "left" }) {
   return e(
@@ -103,15 +112,16 @@ function Loader() {
 
 function Hero() {
   const [index, setIndex] = useState(0);
+  const slides = useMemo(() => shuffled(heroSlides), []);
   const { scrollY } = useScroll();
   const imageY = useTransform(scrollY, [0, 900], [0, 140]);
 
   useEffect(() => {
     const id = window.setInterval(() => {
-      setIndex((value) => (value + 1) % heroSlides.length);
+      setIndex((value) => (value + 1) % slides.length);
     }, 5200);
     return () => window.clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   return e(
     "section",
@@ -123,8 +133,8 @@ function Hero() {
         AnimatePresence,
         { mode: "wait" },
         e(motion.img, {
-          key: heroSlides[index].src,
-          src: heroSlides[index].src,
+          key: slides[index].src,
+          src: slides[index].src,
           alt: "",
           className: "hero-image",
           style: { y: imageY },
@@ -231,6 +241,65 @@ function About() {
   );
 }
 
+function PortfolioPanel({ section }) {
+  const panelRef = useRef(null);
+  const photos = useMemo(() => shuffled(section.photos), [section.photos]);
+  const isSports = section.id === "portfolio-sports";
+  const { scrollYProgress } = useScroll({
+    target: panelRef,
+    offset: ["start start", "55% start"],
+  });
+  const sportsOpacity = useTransform(scrollYProgress, [0, 0.42, 1], [1, 0.86, 0]);
+  const sportsY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const sportsScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 1.08, 0.72]);
+  const sportsBlur = useTransform(scrollYProgress, [0, 0.65, 1], ["blur(0px)", "blur(0px)", "blur(18px)"]);
+
+  return e(
+    "article",
+    { ref: panelRef, key: section.id, id: section.id, className: `portfolio-panel ${isSports ? "portfolio-panel-featured" : ""}` },
+    e(
+      motion.div,
+      {
+        className: "portfolio-panel-copy",
+        style: isSports ? { opacity: sportsOpacity, y: sportsY, scale: sportsScale, filter: sportsBlur } : undefined,
+        initial: { opacity: 0, y: isSports ? 80 : 34 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: false, amount: isSports ? 0.72 : 0.36 },
+        transition: { duration: isSports ? 0.95 : 0.7, ease: [0.16, 1, 0.3, 1] },
+      },
+      e("p", { className: "eyebrow" }, `Portfolio / ${section.number}`),
+      e("h2", null, section.title),
+      e("p", null, section.text),
+    ),
+    e(
+      "div",
+      { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
+      photos.map((photo, photoIndex) =>
+        e(
+          motion.figure,
+          {
+            key: photo,
+            className: "portfolio-photo-tile",
+            initial: { opacity: 0, y: 42, scale: 0.96 },
+            whileInView: { opacity: 1, y: 0, scale: 1 },
+            viewport: { once: true, margin: "-80px" },
+            transition: { duration: 0.7, delay: Math.min(photoIndex, 5) * 0.05, ease: [0.16, 1, 0.3, 1] },
+          },
+          e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
+        ),
+      ),
+    ),
+    section.nextId
+      ? e(
+          "div",
+          { className: "portfolio-scroll-trigger", "data-next-section": section.nextId },
+          e("a", { href: `#${section.nextId}` }, `Continue to ${section.nextId === "portfolio-events" ? "Events" : "Commercial"}`),
+          e("span", { "aria-hidden": true }),
+        )
+      : null,
+  );
+}
+
 function PortfolioCategories() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
@@ -258,51 +327,7 @@ function PortfolioCategories() {
   return e(
     "section",
     { id: "portfolio", className: "portfolio-showcase" },
-    portfolioSections.map((section) =>
-      e(
-        "article",
-        { key: section.id, id: section.id, className: "portfolio-panel" },
-        e(
-          motion.div,
-          {
-            className: "portfolio-panel-copy",
-            initial: { opacity: 0, y: 34 },
-            whileInView: { opacity: 1, y: 0 },
-            viewport: { once: true, amount: 0.36 },
-            transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-          },
-          e("p", { className: "eyebrow" }, `Portfolio / ${section.number}`),
-          e("h2", null, section.title),
-          e("p", null, section.text),
-        ),
-        e(
-          "div",
-          { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
-          section.photos.map((photo, photoIndex) =>
-            e(
-              motion.figure,
-              {
-                key: photo,
-                className: "portfolio-photo-tile",
-                initial: { opacity: 0, y: 28 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, margin: "-80px" },
-                transition: { duration: 0.55, delay: Math.min(photoIndex, 5) * 0.04, ease: [0.22, 1, 0.36, 1] },
-              },
-              e("img", { src: photo, alt: `${section.title} portfolio photo ${photoIndex + 1}`, loading: photoIndex < 3 ? "eager" : "lazy" }),
-            ),
-          ),
-        ),
-        section.nextId
-          ? e(
-              "div",
-              { className: "portfolio-scroll-trigger", "data-next-section": section.nextId },
-              e("a", { href: `#${section.nextId}` }, `Continue to ${section.nextId === "portfolio-events" ? "Events" : "Commercial"}`),
-              e("span", { "aria-hidden": true }),
-            )
-          : null,
-      ),
-    ),
+    portfolioSections.map((section) => e(PortfolioPanel, { key: section.id, section })),
   );
 }
 
