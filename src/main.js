@@ -224,8 +224,8 @@ function About() {
           viewport: { once: true, margin: "-80px" },
           transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
         },
-        e("img", { src: "/assets/photos/commercial/RL1D1632.jpg", alt: "DRobbMedia commercial photography" }),
-        e("div", { className: "portrait-caption" }, "Commercial photography by DRobbMedia"),
+        e("img", { src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/unnamed.jpg", alt: "DRobbMedia portrait placeholder" }),
+        e("div", { className: "portrait-caption" }, "Replace with your portrait or behind-the-camera image"),
       ),
     ),
   );
