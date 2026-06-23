@@ -11,20 +11,34 @@ export const navItems = [
 
 export const heroSlides = [
   {
-    src: "/assets/photos/sport/RL1D2355.jpg",
-    title: "Sport action landscape",
+    src: "/assets/photos/sport/RL1D4598.jpg",
+    title: "Two centered Colts players smiling after play",
+    position: "center 36%",
   },
   {
     src: "/assets/photos/sport/RL1D4836.JPG",
-    title: "Sport coverage landscape",
+    title: "Centered Colts player kicking in warmup",
+    position: "center center",
   },
   {
     src: "/assets/photos/sport/RL1D5141.JPG",
-    title: "Sport intensity landscape",
+    title: "Two centered players contesting the ball",
+    position: "center 42%",
+  },
+  {
+    src: "/assets/photos/sport/RL1D5520.JPG",
+    title: "Centered marking contest in front of goal",
+    position: "center 42%",
   },
   {
     src: "/assets/photos/sport/RL1D5912 copy.jpg",
-    title: "Matchday moment landscape",
+    title: "Zoomed-out marking contest with grass visible",
+    position: "center bottom",
+  },
+  {
+    src: "/assets/photos/sport/RL1D9987.jpg",
+    title: "Centered Colts player breaking through traffic",
+    position: "center 40%",
   },
 ];
 
