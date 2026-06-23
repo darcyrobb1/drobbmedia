@@ -213,9 +213,17 @@ textarea {
 }
 
 .hero-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: calc(100% + 160px);
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1000ms ease;
+}
+
+.hero-image.is-active {
+  opacity: 1;
 }
 
 .hero-overlay {
@@ -241,14 +249,14 @@ textarea {
 .hero-content h1 {
   margin: 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(3rem, 8.4vw, 8.4rem);
+  font-size: clamp(2.4rem, 6.72vw, 6.72rem);
   font-weight: 500;
   line-height: 0.82;
 }
 
 .hero-tagline {
   margin: 24px 0 0;
-  font-size: clamp(1rem, 2.3vw, 1.65rem);
+  font-size: clamp(0.8rem, 1.84vw, 1.32rem);
   color: var(--white);
 }
 
@@ -256,7 +264,7 @@ textarea {
   width: min(620px, 100%);
   margin: 18px 0 0;
   color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+  font-size: clamp(0.78rem, 1.28vw, 0.92rem);
 }
 
 .hero-actions {
@@ -274,7 +282,7 @@ textarea {
   padding: 0 22px;
   border: 1px solid currentColor;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -919,7 +927,7 @@ textarea {
   }
 
   .hero-content h1 {
-    font-size: clamp(4.1rem, 22vw, 6rem);
+    font-size: clamp(3.28rem, 17.6vw, 4.8rem);
   }
 
   .hero-actions .btn {
@@ -983,6 +991,205 @@ textarea {
   <body>
     <div id="root"></div>
     <noscript>DRobbMedia requires JavaScript to display the full photography experience.</noscript>
+    <script>
+      window.renderDRobbMediaFallback = function renderDRobbMediaFallback() {
+        const root = document.getElementById("root");
+        if (!root || root.children.length) return;
+        const fallbackHeroSlides = [
+          "/assets/photos/sport/RL1D2355.jpg",
+          "/assets/photos/sport/RL1D4836.JPG",
+          "/assets/photos/sport/RL1D5141.JPG",
+          "/assets/photos/sport/RL1D5912 copy.jpg",
+        ];
+
+        root.innerHTML = `
+          <header class="navbar">
+            <a href="#top" class="brand" aria-label="DRobbMedia home">
+              <img src="/assets/drobbmedia-logo.png" alt="" class="brand-logo">
+              <span>DRobbMedia</span>
+            </a>
+            <nav class="nav-links" aria-label="Primary navigation">
+              <a href="#about">About</a>
+              <a href="#portfolio">Portfolio</a>
+              <a href="#portfolio">Blog</a>
+              <a href="#services">Services</a>
+              <a href="#contact">Contact</a>
+            </nav>
+          </header>
+          <main>
+            <section id="top" class="hero-section">
+              <div class="hero-media" aria-hidden="true">
+                <img src="${fallbackHeroSlides[0]}" alt="" class="hero-image is-active" data-fallback-hero-image="0">
+                <img src="${fallbackHeroSlides[1]}" alt="" class="hero-image" data-fallback-hero-image="1">
+              </div>
+              <div class="hero-overlay"></div>
+              <div class="hero-content">
+                <div>
+                  <img src="/assets/drobbmedia-logo.png" alt="DRobbMedia logo" class="hero-logo">
+                  <h1>DRobbMedia</h1>
+                </div>
+                <p class="hero-tagline">Sports, Events, &amp; Commercial Photography</p>
+                <p class="hero-intro">Cinematic coverage for fast-moving sport, high quality commercial photography for businesses, and capturing all types of events to last a lifetime.</p>
+                <div class="hero-actions">
+                  <a class="btn btn-light" href="#portfolio">View Portfolio</a>
+                  <a class="btn btn-dark" href="#contact">Book a Shoot</a>
+                </div>
+              </div>
+            </section>
+            <section id="portfolio" class="portfolio-showcase">
+              <article id="portfolio-sports" class="portfolio-panel portfolio-panel-featured">
+                <div class="portfolio-panel-copy">
+                  <p class="eyebrow">Portfolio / 01</p>
+                  <h2>Sports</h2>
+                  <p>Action, emotion, pressure, and the moments that decide the game.</p>
+                </div>
+                <div class="portfolio-photo-grid" aria-label="Sports portfolio photos">
+                  ${[
+                    "/assets/photos/sport/IMG_1435.jpg",
+                    "/assets/photos/sport/RL1D2138.jpg",
+                    "/assets/photos/sport/RL1D3987.jpg",
+                    "/assets/photos/sport/RL1D4995.jpg",
+                  ].map((src, index) => `
+                    <div class="portfolio-photo-pair">
+                      <figure class="portfolio-photo-tile">
+                        <img src="${src}" alt="Sports portfolio photo ${index + 1}" loading="${index < 2 ? "eager" : "lazy"}">
+                      </figure>
+                    </div>
+                  `).join("")}
+                </div>
+              </article>
+              <article id="portfolio-events" class="portfolio-panel">
+                <div class="portfolio-panel-copy">
+                  <p class="eyebrow">Portfolio / 02</p>
+                  <h2>Events</h2>
+                  <p>Atmosphere, detail, people, and coverage built around the room.</p>
+                </div>
+                <div class="portfolio-photo-grid" aria-label="Events portfolio photos">
+                  ${[
+                    "/assets/photos/event/1-RL1D2680.jpg",
+                    "/assets/photos/event/DSC00326.JPG",
+                    "/assets/photos/event/IMG_1775.JPG",
+                    "/assets/photos/event/RL1D3499.jpg",
+                  ].map((src, index) => `
+                    <div class="portfolio-photo-pair">
+                      <figure class="portfolio-photo-tile">
+                        <img src="${src}" alt="Events portfolio photo ${index + 1}" loading="lazy">
+                      </figure>
+                    </div>
+                  `).join("")}
+                </div>
+              </article>
+              <article id="portfolio-commercial" class="portfolio-panel">
+                <div class="portfolio-panel-copy">
+                  <p class="eyebrow">Portfolio / 03</p>
+                  <h2>Commercial</h2>
+                  <p>Clean brand imagery for teams, people, products, and campaigns.</p>
+                </div>
+                <div class="portfolio-photo-grid" aria-label="Commercial portfolio photos">
+                  ${[
+                    "/assets/photos/commercial/IMG_2253.JPG",
+                    "/assets/photos/commercial/RL1D1584.jpg",
+                    "/assets/photos/commercial/RL1D2381.JPG",
+                    "/assets/photos/commercial/RL1D2430.JPG",
+                  ].map((src, index) => `
+                    <div class="portfolio-photo-pair">
+                      <figure class="portfolio-photo-tile">
+                        <img src="${src}" alt="Commercial portfolio photo ${index + 1}" loading="lazy">
+                      </figure>
+                    </div>
+                  `).join("")}
+                </div>
+              </article>
+            </section>
+            <section id="services" class="section section-black services-section">
+              <div class="site-container">
+                <div class="section-heading">
+                  <p class="eyebrow">Services</p>
+                  <h2>Premium coverage, built around the day.</h2>
+                  <p class="section-copy">Simple package lanes with room to refine pricing once your final offer is locked.</p>
+                </div>
+                <div class="services-grid">
+                  ${["Sports Coverage", "Event Photography", "Commercial Photography", "Highlight Reels"].map((title) => `
+                    <article class="service-card">
+                      <div>
+                        <h3>${title}</h3>
+                        <p>Sharp, polished coverage built for the moment and delivered ready for web, social, and brand use.</p>
+                      </div>
+                      <ul>
+                        <li>Planning call</li>
+                        <li>Edited gallery delivery</li>
+                        <li>Social-ready selects</li>
+                      </ul>
+                      <div class="service-footer"><strong>From $___</strong><a href="#contact">Enquire</a></div>
+                    </article>
+                  `).join("")}
+                </div>
+              </div>
+            </section>
+            <section id="about" class="section about-section">
+              <div class="site-grid about-grid">
+                <div>
+                  <div class="section-heading">
+                    <p class="eyebrow">About</p>
+                    <h2>Fast when it matters. Quiet when the moment needs space.</h2>
+                    <p class="section-copy">DRobbMedia captures fast-paced sport, live events, and commercial stories with a cinematic, professional style.</p>
+                  </div>
+                  <div class="about-stats"><span>Sport</span><span>Events</span><span>Commercial</span></div>
+                </div>
+                <div class="portrait-frame">
+                  <img src="/assets/photos/unnamed.jpg" alt="DRobbMedia portrait placeholder">
+                  <div class="portrait-caption">Replace with your portrait or behind-the-camera image</div>
+                </div>
+              </div>
+            </section>
+            <section id="contact" class="section contact-section">
+              <div class="site-grid contact-grid">
+                <div>
+                  <div class="section-heading">
+                    <p class="eyebrow">Book a Shoot</p>
+                    <h2>Tell me what you need covered.</h2>
+                    <p class="section-copy">Use this enquiry form as the front door for sport, events, commercial projects, and highlight reels.</p>
+                  </div>
+                  <div class="contact-links">
+                    <a href="mailto:hello@drobbmedia.com"><span>Email</span><strong>hello@drobbmedia.com</strong></a>
+                    <a href="https://instagram.com/drobbmedia"><span>Instagram</span><strong>@drobbmedia</strong></a>
+                  </div>
+                </div>
+                <form class="contact-form" action="mailto:hello@drobbmedia.com" method="post" enctype="text/plain">
+                  <label>Name<input name="name" type="text" placeholder="Your name" required></label>
+                  <label>Email<input name="email" type="email" placeholder="you@example.com" required></label>
+                  <label>Phone<input name="phone" type="tel" placeholder="+61 ..."></label>
+                  <label>Shoot type<select name="shootType"><option>Sports Coverage</option><option>Event Photography</option><option>Commercial Photography</option><option>Highlight Reels</option></select></label>
+                  <label class="full">Message<textarea name="message" rows="5" placeholder="Share the date, coverage needs, and anything I should know."></textarea></label>
+                  <button class="btn btn-light full" type="submit">Submit Enquiry</button>
+                </form>
+              </div>
+            </section>
+          </main>
+          <footer class="footer">
+            <a href="#top" class="brand" aria-label="DRobbMedia home">
+              <img src="/assets/drobbmedia-logo.png" alt="" class="brand-logo">
+              <span>DRobbMedia</span>
+            </a>
+            <p>Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.</p>
+          </footer>
+        `;
+
+        const heroImages = root.querySelectorAll("[data-fallback-hero-image]");
+        let heroIndex = 0;
+        let activeImage = 0;
+        window.setInterval(() => {
+          heroIndex = (heroIndex + 1) % fallbackHeroSlides.length;
+          const nextImage = 1 - activeImage;
+          heroImages[nextImage].src = fallbackHeroSlides[heroIndex];
+          heroImages[nextImage].classList.add("is-active");
+          heroImages[activeImage].classList.remove("is-active");
+          activeImage = nextImage;
+        }, 3000);
+      };
+
+      window.setTimeout(window.renderDRobbMediaFallback, 1800);
+    </script>
     <script type="module">
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -1000,24 +1207,20 @@ const navItems = [
 
 const heroSlides = [
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0016.jpg",
-    title: "Sport action",
+    src: "/assets/photos/sport/RL1D2355.jpg",
+    title: "Sport action landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D2138.jpg",
-    title: "Sport coverage",
+    src: "/assets/photos/sport/RL1D4836.JPG",
+    title: "Sport coverage landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D3987.jpg",
-    title: "Sport intensity",
+    src: "/assets/photos/sport/RL1D5141.JPG",
+    title: "Sport intensity landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4995.jpg",
-    title: "Matchday moment",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
-    title: "Sports photography",
+    src: "/assets/photos/sport/RL1D5912 copy.jpg",
+    title: "Matchday moment landscape",
   },
 ];
 
@@ -1246,7 +1449,7 @@ function Hero() {
   useEffect(() => {
     const id = window.setInterval(() => {
       setIndex((value) => (value + 1) % slides.length);
-    }, 5200);
+    }, 3000);
     return () => window.clearInterval(id);
   }, [slides.length]);
 
@@ -1258,7 +1461,7 @@ function Hero() {
       { className: "hero-media", "aria-hidden": "true" },
       e(
         AnimatePresence,
-        { mode: "wait" },
+        { initial: false },
         e(motion.img, {
           key: slides[index].src,
           src: slides[index].src,
@@ -1268,7 +1471,7 @@ function Hero() {
           initial: { opacity: 0, scale: 1.04 },
           animate: { opacity: 1, scale: 1 },
           exit: { opacity: 0, scale: 1.02 },
-          transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 1, ease: "easeInOut" },
         }),
       ),
     ),
