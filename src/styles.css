@@ -191,9 +191,17 @@ textarea {
 }
 
 .hero-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: calc(100% + 160px);
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1000ms ease;
+}
+
+.hero-image.is-active {
+  opacity: 1;
 }
 
 .hero-overlay {
@@ -219,14 +227,14 @@ textarea {
 .hero-content h1 {
   margin: 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(3rem, 8.4vw, 8.4rem);
+  font-size: clamp(2.4rem, 6.72vw, 6.72rem);
   font-weight: 500;
   line-height: 0.82;
 }
 
 .hero-tagline {
   margin: 24px 0 0;
-  font-size: clamp(1rem, 2.3vw, 1.65rem);
+  font-size: clamp(0.8rem, 1.84vw, 1.32rem);
   color: var(--white);
 }
 
@@ -234,7 +242,7 @@ textarea {
   width: min(620px, 100%);
   margin: 18px 0 0;
   color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+  font-size: clamp(0.78rem, 1.28vw, 0.92rem);
 }
 
 .hero-actions {
@@ -252,7 +260,7 @@ textarea {
   padding: 0 22px;
   border: 1px solid currentColor;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -897,7 +905,7 @@ textarea {
   }
 
   .hero-content h1 {
-    font-size: clamp(4.1rem, 22vw, 6rem);
+    font-size: clamp(3.28rem, 17.6vw, 4.8rem);
   }
 
   .hero-actions .btn {
