@@ -449,26 +449,30 @@ textarea {
 .portfolio-panel-copy {
   position: relative;
   z-index: 2;
-  width: min(1120px, calc(100% - 36px));
+  width: min(896px, calc(100% - 36px));
   max-width: none;
   margin: 0 auto;
-  padding: clamp(88px, 15vh, 150px) 0 clamp(42px, 8vh, 86px);
+  padding: clamp(70px, 12vh, 120px) 0 clamp(34px, 6.4vh, 69px);
   text-align: center;
+}
+
+.portfolio-panel-copy .eyebrow {
+  font-size: clamp(0.72rem, 1.28vw, 1.04rem);
 }
 
 .portfolio-panel-copy h2 {
   margin: 8px 0 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(4.8rem, 15vw, 15rem);
+  font-size: clamp(3.84rem, 12vw, 12rem);
   font-weight: 500;
   line-height: 0.78;
 }
 
 .portfolio-panel-copy > p:last-child {
-  width: min(680px, 100%);
-  margin: 24px auto 0;
+  width: min(544px, 100%);
+  margin: 20px auto 0;
   color: rgba(244, 244, 241, 0.7);
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-size: clamp(0.84rem, 1.44vw, 1.08rem);
   line-height: 1.5;
 }
 
@@ -482,17 +486,17 @@ textarea {
   min-height: 100svh;
   display: grid;
   place-content: center;
-  padding: clamp(76px, 12vh, 120px) 0;
+  padding: clamp(61px, 9.6vh, 96px) 0;
   pointer-events: none;
 }
 
 .portfolio-panel-featured .portfolio-panel-copy h2 {
-  font-size: clamp(6rem, 22vw, 22rem);
+  font-size: clamp(4.8rem, 17.6vw, 17.6rem);
   letter-spacing: 0;
 }
 
 .portfolio-panel-featured .portfolio-panel-copy .eyebrow {
-  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
+  font-size: clamp(0.72rem, 1.28vw, 1.04rem);
 }
 
 .portfolio-photo-grid {
@@ -878,9 +882,9 @@ textarea {
   }
 
   .portfolio-panel-copy {
-    width: min(100% - 28px, 760px);
-    padding-top: 96px;
-    padding-bottom: 64px;
+    width: min(100% - 28px, 608px);
+    padding-top: 77px;
+    padding-bottom: 51px;
   }
 
   .portfolio-photo-grid {
