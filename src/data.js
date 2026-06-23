@@ -28,12 +28,22 @@ export const heroSlides = [
   {
     src: "/assets/photos/sport/RL1D5520.JPG",
     title: "Centered marking contest in front of goal",
-    position: "center 42%",
+    position: "center 48%",
   },
   {
     src: "/assets/photos/sport/RL1D5912 copy.jpg",
     title: "Zoomed-out marking contest with grass visible",
     position: "center bottom",
+  },
+  {
+    src: "/assets/photos/sport/RL1D8789.JPG",
+    title: "Centered Colts player celebrating",
+    position: "center 34%",
+  },
+  {
+    src: "/assets/photos/sport/RL1D0904.JPG",
+    title: "Centered player preparing to handball",
+    position: "center 42%",
   },
   {
     src: "/assets/photos/sport/RL1D9987.jpg",
