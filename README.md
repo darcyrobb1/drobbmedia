@@ -56,4 +56,4 @@ npm run dev
 npm run build
 ```
 
-Last deployment trigger: 2026-06-23.
+Last deployment trigger: 2026-06-23 16:01 AEST.
