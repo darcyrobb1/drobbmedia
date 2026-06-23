@@ -218,11 +218,14 @@ textarea {
   width: 100%;
   height: calc(100% + 160px);
   object-fit: cover;
+}
+
+.fallback-hero-image {
   opacity: 0;
   transition: opacity 1000ms ease;
 }
 
-.hero-image.is-active {
+.fallback-hero-image.is-active {
   opacity: 1;
 }
 
@@ -996,10 +999,36 @@ textarea {
         const root = document.getElementById("root");
         if (!root || root.children.length) return;
         const fallbackHeroSlides = [
-          "/assets/photos/sport/RL1D2355.jpg",
-          "/assets/photos/sport/RL1D4836.JPG",
-          "/assets/photos/sport/RL1D5141.JPG",
-          "/assets/photos/sport/RL1D5912 copy.jpg",
+          {
+            src: "/assets/photos/sport/RL1D4598.jpg",
+            title: "Two centered Colts players smiling after play",
+            position: "center 36%",
+          },
+          {
+            src: "/assets/photos/sport/RL1D4836.JPG",
+            title: "Centered Colts player kicking in warmup",
+            position: "center center",
+          },
+          {
+            src: "/assets/photos/sport/RL1D5141.JPG",
+            title: "Two centered players contesting the ball",
+            position: "center 42%",
+          },
+          {
+            src: "/assets/photos/sport/RL1D5520.JPG",
+            title: "Centered marking contest in front of goal",
+            position: "center 42%",
+          },
+          {
+            src: "/assets/photos/sport/RL1D5912 copy.jpg",
+            title: "Zoomed-out marking contest with grass visible",
+            position: "center bottom",
+          },
+          {
+            src: "/assets/photos/sport/RL1D9987.jpg",
+            title: "Centered Colts player breaking through traffic",
+            position: "center 40%",
+          },
         ];
 
         root.innerHTML = `
@@ -1019,8 +1048,8 @@ textarea {
           <main>
             <section id="top" class="hero-section">
               <div class="hero-media" aria-hidden="true">
-                <img src="${fallbackHeroSlides[0]}" alt="" class="hero-image is-active" data-fallback-hero-image="0">
-                <img src="${fallbackHeroSlides[1]}" alt="" class="hero-image" data-fallback-hero-image="1">
+                <img src="${fallbackHeroSlides[0].src}" alt="" class="hero-image fallback-hero-image is-active" style="object-position: ${fallbackHeroSlides[0].position}" data-fallback-hero-image="0">
+                <img src="${fallbackHeroSlides[1].src}" alt="" class="hero-image fallback-hero-image" style="object-position: ${fallbackHeroSlides[1].position}" data-fallback-hero-image="1">
               </div>
               <div class="hero-overlay"></div>
               <div class="hero-content">
@@ -1181,7 +1210,8 @@ textarea {
         window.setInterval(() => {
           heroIndex = (heroIndex + 1) % fallbackHeroSlides.length;
           const nextImage = 1 - activeImage;
-          heroImages[nextImage].src = fallbackHeroSlides[heroIndex];
+          heroImages[nextImage].src = fallbackHeroSlides[heroIndex].src;
+          heroImages[nextImage].style.objectPosition = fallbackHeroSlides[heroIndex].position;
           heroImages[nextImage].classList.add("is-active");
           heroImages[activeImage].classList.remove("is-active");
           activeImage = nextImage;
@@ -1207,20 +1237,34 @@ const navItems = [
 
 const heroSlides = [
   {
-    src: "/assets/photos/sport/RL1D2355.jpg",
-    title: "Sport action landscape",
+    src: "/assets/photos/sport/RL1D4598.jpg",
+    title: "Two centered Colts players smiling after play",
+    position: "center 36%",
   },
   {
     src: "/assets/photos/sport/RL1D4836.JPG",
-    title: "Sport coverage landscape",
+    title: "Centered Colts player kicking in warmup",
+    position: "center center",
   },
   {
     src: "/assets/photos/sport/RL1D5141.JPG",
-    title: "Sport intensity landscape",
+    title: "Two centered players contesting the ball",
+    position: "center 42%",
+  },
+  {
+    src: "/assets/photos/sport/RL1D5520.JPG",
+    title: "Centered marking contest in front of goal",
+    position: "center 42%",
   },
   {
     src: "/assets/photos/sport/RL1D5912 copy.jpg",
-    title: "Matchday moment landscape",
+    title: "Zoomed-out marking contest with grass visible",
+    position: "center bottom",
+  },
+  {
+    src: "/assets/photos/sport/RL1D9987.jpg",
+    title: "Centered Colts player breaking through traffic",
+    position: "center 40%",
   },
 ];
 
@@ -1467,7 +1511,7 @@ function Hero() {
           src: slides[index].src,
           alt: "",
           className: "hero-image",
-          style: { y: imageY },
+          style: { y: imageY, objectPosition: slides[index].position || "center center" },
           initial: { opacity: 0, scale: 1.04 },
           animate: { opacity: 1, scale: 1 },
           exit: { opacity: 0, scale: 1.02 },
