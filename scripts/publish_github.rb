@@ -1,13 +1,11 @@
-require "base64"
-require "json"
+require "fileutils"
 require "open3"
-require "tempfile"
 require "tmpdir"
 
 ROOT = File.expand_path("..", __dir__)
-REPO = "darcyrobb1/drobbmedia"
+REPO_URL = "https://github.com/darcyrobb1/drobbmedia.git"
 BRANCH = "main"
-GH = "/Users/darcyrobb/.local/bin/gh"
+PUBLISH_DIR = ENV.fetch("DROBBMEDIA_PUBLISH_DIR", File.join(Dir.tmpdir, "drobbmedia-publish"))
 
 FILES = [
   "index.html",
@@ -16,6 +14,8 @@ FILES = [
   "vercel.json",
   "package.json",
   "README.md",
+  "robots.txt",
+  "sitemap.xml",
   "src/data.js",
   "src/main.js",
   "src/styles.css",
@@ -27,39 +27,57 @@ FILES = [
   File.join(ROOT, "assets/photos/{sport,commercial,event}/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}")
 ].map { |path| path.delete_prefix("#{ROOT}/") }.uniq.sort
 
-def gh_json(*args)
-  stdout, stderr, status = Open3.capture3(GH, "api", *args)
-  abort(stderr.empty? ? stdout : stderr) unless status.success?
-  stdout.empty? ? nil : JSON.parse(stdout)
+def run!(*args, chdir: nil)
+  stdout, stderr, status = Open3.capture3(*args, chdir: chdir)
+  return stdout if status.success?
+
+  command = args.join(" ")
+  message = stderr.empty? ? stdout : stderr
+  abort("Command failed: #{command}\n#{message}")
 end
 
-def gh_put(path, payload)
-  Tempfile.create(["gh-payload", ".json"]) do |file|
-    file.write(JSON.pretty_generate(payload))
-    file.flush
-    gh_json(
-      "--method", "PUT",
-      "repos/#{REPO}/contents/#{path}",
-      "--input", file.path
-    )
+def git!(*args)
+  run!("git", *args, chdir: PUBLISH_DIR)
+end
+
+def ensure_clone
+  if File.directory?(File.join(PUBLISH_DIR, ".git"))
+    git!("fetch", "origin", BRANCH)
+    git!("checkout", BRANCH)
+    git!("pull", "--ff-only", "origin", BRANCH)
+    return
+  end
+
+  FileUtils.rm_rf(PUBLISH_DIR)
+  FileUtils.mkdir_p(File.dirname(PUBLISH_DIR))
+  run!("git", "clone", "--branch", BRANCH, REPO_URL, PUBLISH_DIR)
+end
+
+def copy_publish_files
+  FILES.each do |path|
+    source = File.join(ROOT, path)
+    destination = File.join(PUBLISH_DIR, path)
+
+    abort("Missing publish file: #{source}") unless File.file?(source)
+
+    FileUtils.mkdir_p(File.dirname(destination))
+    FileUtils.cp(source, destination, preserve: true)
   end
 end
 
-FILES.each do |path|
-  absolute = File.join(ROOT, path)
-  content = Base64.strict_encode64(File.binread(absolute))
-  current = nil
+ensure_clone
+copy_publish_files
 
-  stdout, _stderr, status = Open3.capture3(GH, "api", "repos/#{REPO}/contents/#{path}?ref=#{BRANCH}")
-  current = JSON.parse(stdout) if status.success? && !stdout.empty?
+git!("add", *FILES)
 
-  payload = {
-    message: "Remake DRobbMedia website",
-    content: content,
-    branch: BRANCH
-  }
-  payload[:sha] = current["sha"] if current && current["sha"]
-
-  result = gh_put(path, payload)
-  puts "#{current ? "updated" : "created"} #{path} -> #{result.fetch("commit").fetch("sha")[0, 12]}"
+status = git!("status", "--porcelain")
+if status.strip.empty?
+  puts "No publish changes found. Nothing pushed."
+  exit 0
 end
+
+message = ENV.fetch("DROBBMEDIA_COMMIT_MESSAGE", "Update DRobbMedia website")
+git!("commit", "-m", message)
+git!("push", "origin", BRANCH)
+
+puts "Published one commit to #{BRANCH}."
