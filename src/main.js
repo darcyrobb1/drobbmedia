@@ -127,7 +127,7 @@ function Hero() {
   useEffect(() => {
     const id = window.setInterval(() => {
       setIndex((value) => (value + 1) % slides.length);
-    }, 5200);
+    }, 3000);
     return () => window.clearInterval(id);
   }, [slides.length]);
 
@@ -139,7 +139,7 @@ function Hero() {
       { className: "hero-media", "aria-hidden": "true" },
       e(
         AnimatePresence,
-        { mode: "wait" },
+        { initial: false },
         e(motion.img, {
           key: slides[index].src,
           src: slides[index].src,
@@ -149,7 +149,7 @@ function Hero() {
           initial: { opacity: 0, scale: 1.04 },
           animate: { opacity: 1, scale: 1 },
           exit: { opacity: 0, scale: 1.02 },
-          transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 1, ease: "easeInOut" },
         }),
       ),
     ),
