@@ -145,7 +145,7 @@ function Hero() {
           src: slides[index].src,
           alt: "",
           className: "hero-image",
-          style: { y: imageY },
+          style: { y: imageY, objectPosition: slides[index].position || "center center" },
           initial: { opacity: 0, scale: 1.04 },
           animate: { opacity: 1, scale: 1 },
           exit: { opacity: 0, scale: 1.02 },
