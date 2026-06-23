@@ -11,24 +11,20 @@ export const navItems = [
 
 export const heroSlides = [
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0016.jpg",
-    title: "Sport action",
+    src: "/assets/photos/sport/RL1D2355.jpg",
+    title: "Sport action landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D2138.jpg",
-    title: "Sport coverage",
+    src: "/assets/photos/sport/RL1D4836.JPG",
+    title: "Sport coverage landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D3987.jpg",
-    title: "Sport intensity",
+    src: "/assets/photos/sport/RL1D5141.JPG",
+    title: "Sport intensity landscape",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4995.jpg",
-    title: "Matchday moment",
-  },
-  {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
-    title: "Sports photography",
+    src: "/assets/photos/sport/RL1D5912 copy.jpg",
+    title: "Matchday moment landscape",
   },
 ];
 
