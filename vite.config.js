@@ -2,21 +2,27 @@ import { cpSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 
-function copyRootAssets() {
+function copyStaticFiles() {
   return {
-    name: "copy-root-assets",
+    name: "copy-static-files",
     apply: "build",
     closeBundle() {
-      const source = resolve("assets");
-      const destination = resolve("dist/assets");
+      const assetsSource = resolve("assets");
+      const assetsDestination = resolve("dist/assets");
 
-      if (existsSync(source)) {
-        cpSync(source, destination, { recursive: true });
+      if (existsSync(assetsSource)) {
+        cpSync(assetsSource, assetsDestination, { recursive: true });
       }
+
+      ["blog.html", "contact.html", "galleries.html", "robots.txt", "sitemap.xml"].forEach((path) => {
+        if (existsSync(path)) {
+          cpSync(resolve(path), resolve("dist", path));
+        }
+      });
     },
   };
 }
 
 export default defineConfig({
-  plugins: [copyRootAssets()],
+  plugins: [copyStaticFiles()],
 });
