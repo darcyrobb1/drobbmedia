@@ -12,6 +12,7 @@ FILES = [
   "galleries.html",
   "contact.html",
   "vercel.json",
+  "vite.config.js",
   "package.json",
   "README.md",
   "robots.txt",
@@ -28,7 +29,8 @@ FILES = [
 ].map { |path| path.delete_prefix("#{ROOT}/") }.uniq.sort
 
 def run!(*args, chdir: nil)
-  stdout, stderr, status = Open3.capture3(*args, chdir: chdir)
+  options = chdir ? { chdir: chdir } : {}
+  stdout, stderr, status = Open3.capture3(*args, **options)
   return stdout if status.success?
 
   command = args.join(" ")

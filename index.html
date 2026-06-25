@@ -209,7 +209,7 @@ textarea {
 
 .hero-media {
   overflow: hidden;
-  background: #111;
+  background: var(--black);
 }
 
 .hero-image {
@@ -395,17 +395,24 @@ textarea {
   font-size: clamp(1rem, 1.5vw, 1.15rem);
 }
 
-.about-section,
 .gallery-section,
 .contact-section {
   color: var(--ink);
   background: var(--paper);
 }
 
-.about-section .section-copy,
 .gallery-section .section-copy,
 .contact-section .section-copy {
   color: rgba(18, 18, 18, 0.66);
+}
+
+.about-section {
+  color: var(--paper);
+  background: var(--black);
+}
+
+.about-section .section-copy {
+  color: rgba(244, 244, 241, 0.72);
 }
 
 .about-stats {
@@ -416,9 +423,9 @@ textarea {
 
 .about-stats span {
   padding: 10px 14px;
-  border: 1px solid var(--dark-line);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  color: rgba(18, 18, 18, 0.7);
+  color: rgba(244, 244, 241, 0.7);
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -554,6 +561,50 @@ textarea {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+#portfolio-sports .portfolio-photo-pair,
+#portfolio-events .portfolio-photo-pair,
+#portfolio-commercial .portfolio-photo-pair {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(3px, 0.35vw, 6px);
+  padding: clamp(3px, 0.35vw, 6px);
+}
+
+#portfolio-sports .portfolio-photo-tile img,
+#portfolio-events .portfolio-photo-tile img,
+#portfolio-commercial .portfolio-photo-tile img {
+  object-fit: contain;
+  object-position: center center;
+}
+
+@keyframes fallbackPortfolioTitleFade {
+  0%,
+  45% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+
+  78% {
+    opacity: 0.28;
+    transform: translateY(-110px) scale(0.84);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-150px) scale(0.72);
+    filter: blur(18px);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  body.drobbmedia-fallback .portfolio-panel-featured .portfolio-panel-copy {
+    animation: fallbackPortfolioTitleFade linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% cover 55%;
+  }
 }
 
 .portfolio-scroll-trigger {
@@ -1002,51 +1053,52 @@ textarea {
       window.renderDRobbMediaFallback = function renderDRobbMediaFallback() {
         const root = document.getElementById("root");
         if (!root || root.children.length) return;
+        document.body.classList.add("drobbmedia-fallback");
         const fallbackHeroSlides = [
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4598.jpg",
+            src: "/assets/photos/sport/RL1D4598.jpg",
             title: "Two centered Colts players smiling after play",
             position: "center 36%",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4836.JPG",
+            src: "/assets/photos/sport/RL1D4836.JPG",
             title: "Centered Colts player kicking in warmup",
             position: "center center",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5141.JPG",
+            src: "/assets/photos/sport/RL1D5141.JPG",
             title: "Two centered players contesting the ball",
             position: "center 42%",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5520.JPG",
+            src: "/assets/photos/sport/RL1D5520.JPG",
             title: "Centered marking contest in front of goal",
             position: "center 48%",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5912%20copy.jpg",
+            src: "/assets/photos/sport/RL1D5912 copy.jpg",
             title: "Zoomed-out marking contest with grass visible",
             position: "center bottom",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D8789.JPG",
+            src: "/assets/photos/sport/RL1D8789.JPG",
             title: "Centered Colts player celebrating",
             position: "center 34%",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0904.JPG",
+            src: "/assets/photos/sport/RL1D0904.JPG",
             title: "Centered player preparing to handball",
             position: "center 42%",
           },
           {
-            src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
+            src: "/assets/photos/sport/RL1D9987.jpg",
             title: "Centered Colts player breaking through traffic",
             position: "center 40%",
           },
         ];
-        const fallbackPhotoRows = (photos) =>
+        const fallbackPhotoRows = (photos, size = 2) =>
           photos.reduce((rows, photo, index) => {
-            if (index % 2 === 0) rows.push([photo]);
+            if (index % size === 0) rows.push([photo]);
             else rows[rows.length - 1].push(photo);
             return rows;
           }, []);
@@ -1094,26 +1146,33 @@ textarea {
                 </div>
                 <div class="portfolio-photo-grid" aria-label="Sports portfolio photos">
                   ${fallbackPhotoRows([
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/IMG_1435.jpg",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0146%20copy.JPG",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0453.JPG",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D2589.jpg",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4371.JPG",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4598.jpg",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5520.JPG",
-                    "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D8789.JPG",
-                  ]).map((photoPair, pairIndex) => `
+                    "/assets/photos/sport/IMG_1435.jpg",
+                    "/assets/photos/sport/RL1D0146 copy.JPG",
+                    "/assets/photos/sport/RL1D0583.JPG",
+                    "/assets/photos/sport/RL1D0904.JPG",
+                    "/assets/photos/sport/RL1D2589.jpg",
+                    "/assets/photos/sport/RL1D4012.jpg",
+                    "/assets/photos/sport/RL1D4085.JPG",
+                    "/assets/photos/sport/RL1D4371.JPG",
+                    "/assets/photos/sport/RL1D4598.jpg",
+                    "/assets/photos/sport/RL1D4995.jpg",
+                    "/assets/photos/sport/RL1D5032.jpg",
+                    "/assets/photos/sport/RL1D5520.JPG",
+                    "/assets/photos/sport/RL1D5824 copy.jpg",
+                    "/assets/photos/sport/RL1D8789.JPG",
+                    "/assets/photos/sport/RL1D9987.jpg",
+                  ], 3).map((photoPair, pairIndex) => `
                     <div class="portfolio-photo-pair">
                       ${photoPair.map((src, offset) => `
                         <figure class="portfolio-photo-tile">
-                          <img src="${src}" alt="Sports portfolio photo ${pairIndex * 2 + offset + 1}" loading="${pairIndex < 1 ? "eager" : "lazy"}">
+                          <img src="${src}" alt="Sports portfolio photo ${pairIndex * 3 + offset + 1}" loading="${pairIndex < 1 ? "eager" : "lazy"}">
                         </figure>
                       `).join("")}
                     </div>
                   `).join("")}
                 </div>
               </article>
-              <article id="portfolio-events" class="portfolio-panel">
+              <article id="portfolio-events" class="portfolio-panel portfolio-panel-featured">
                 <div class="portfolio-panel-copy">
                   <p class="eyebrow">Portfolio / 02</p>
                   <h2>Events</h2>
@@ -1121,22 +1180,26 @@ textarea {
                 </div>
                 <div class="portfolio-photo-grid" aria-label="Events portfolio photos">
                   ${fallbackPhotoRows([
-                    "/assets/photos/event/1-RL1D2680.jpg",
-                    "/assets/photos/event/DSC00326.JPG",
-                    "/assets/photos/event/IMG_1775.JPG",
-                    "/assets/photos/event/RL1D3499.jpg",
-                  ]).map((photoPair, pairIndex) => `
+                    "/assets/photos/event/1-RL1D3082.jpg",
+                    "/assets/photos/event/7-RL1D3374.jpg",
+                    "/assets/photos/event/8-RL1D3414.jpg",
+                    "/assets/photos/event/11-RL1D3523.jpg",
+                    "/assets/photos/event/IMG_0172.JPG",
+                    "/assets/photos/event/IMG_1709.JPG",
+                    "/assets/photos/event/IMG_9731.jpg",
+                    "/assets/photos/event/RL1D3419.jpg",
+                  ], 3).map((photoPair, pairIndex) => `
                     <div class="portfolio-photo-pair">
                       ${photoPair.map((src, offset) => `
                         <figure class="portfolio-photo-tile">
-                          <img src="${src}" alt="Events portfolio photo ${pairIndex * 2 + offset + 1}" loading="lazy">
+                          <img src="${src}" alt="Events portfolio photo ${pairIndex * 3 + offset + 1}" loading="lazy">
                         </figure>
                       `).join("")}
                     </div>
                   `).join("")}
                 </div>
               </article>
-              <article id="portfolio-commercial" class="portfolio-panel">
+              <article id="portfolio-commercial" class="portfolio-panel portfolio-panel-featured">
                 <div class="portfolio-panel-copy">
                   <p class="eyebrow">Portfolio / 03</p>
                   <h2>Commercial</h2>
@@ -1146,13 +1209,17 @@ textarea {
                   ${fallbackPhotoRows([
                     "/assets/photos/commercial/IMG_2253.JPG",
                     "/assets/photos/commercial/RL1D1584.jpg",
+                    "/assets/photos/commercial/RL1D1610.jpg",
+                    "/assets/photos/commercial/RL1D1632.jpg",
                     "/assets/photos/commercial/RL1D2381.JPG",
+                    "/assets/photos/commercial/RL1D2406.JPG",
+                    "/assets/photos/commercial/RL1D2425.JPG",
                     "/assets/photos/commercial/RL1D2430.JPG",
-                  ]).map((photoPair, pairIndex) => `
+                  ], 3).map((photoPair, pairIndex) => `
                     <div class="portfolio-photo-pair">
                       ${photoPair.map((src, offset) => `
                         <figure class="portfolio-photo-tile">
-                          <img src="${src}" alt="Commercial portfolio photo ${pairIndex * 2 + offset + 1}" loading="lazy">
+                          <img src="${src}" alt="Commercial portfolio photo ${pairIndex * 3 + offset + 1}" loading="lazy">
                         </figure>
                       `).join("")}
                     </div>
@@ -1210,11 +1277,11 @@ textarea {
                     <p class="section-copy">Use this enquiry form as the front door for sport, events, commercial projects, and highlight reels.</p>
                   </div>
                   <div class="contact-links">
-                    <a href="mailto:hello@drobbmedia.com"><span>Email</span><strong>hello@drobbmedia.com</strong></a>
+                    <a href="mailto:drobbmedia@gmail.com"><span>Email</span><strong>drobbmedia@gmail.com</strong></a>
                     <a href="https://instagram.com/drobbmedia"><span>Instagram</span><strong>@drobbmedia</strong></a>
                   </div>
                 </div>
-                <form class="contact-form" action="mailto:hello@drobbmedia.com" method="post" enctype="text/plain">
+                <form class="contact-form" action="mailto:drobbmedia@gmail.com" method="post" enctype="text/plain">
                   <label>Name<input name="name" type="text" placeholder="Your name" required></label>
                   <label>Email<input name="email" type="email" placeholder="you@example.com" required></label>
                   <label>Phone<input name="phone" type="tel" placeholder="+61 ..."></label>
@@ -1230,6 +1297,10 @@ textarea {
               <img src="/assets/drobbmedia-logo.png" alt="" class="brand-logo">
               <span>DRobbMedia</span>
             </a>
+            <div class="footer-social">
+              <a href="https://instagram.com/drobbmedia">Instagram</a>
+              <a href="mailto:drobbmedia@gmail.com">drobbmedia@gmail.com</a>
+            </div>
             <p>Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.</p>
           </footer>
         `;
@@ -1267,42 +1338,42 @@ const navItems = [
 
 const heroSlides = [
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4598.jpg",
+    src: "/assets/photos/sport/RL1D4598.jpg",
     title: "Two centered Colts players smiling after play",
     position: "center 36%",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4836.JPG",
+    src: "/assets/photos/sport/RL1D4836.JPG",
     title: "Centered Colts player kicking in warmup",
     position: "center center",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5141.JPG",
+    src: "/assets/photos/sport/RL1D5141.JPG",
     title: "Two centered players contesting the ball",
     position: "center 42%",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5520.JPG",
+    src: "/assets/photos/sport/RL1D5520.JPG",
     title: "Centered marking contest in front of goal",
     position: "center 48%",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5912%20copy.jpg",
+    src: "/assets/photos/sport/RL1D5912 copy.jpg",
     title: "Zoomed-out marking contest with grass visible",
     position: "center bottom",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D8789.JPG",
+    src: "/assets/photos/sport/RL1D8789.JPG",
     title: "Centered Colts player celebrating",
     position: "center 34%",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0904.JPG",
+    src: "/assets/photos/sport/RL1D0904.JPG",
     title: "Centered player preparing to handball",
     position: "center 42%",
   },
   {
-    src: "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D9987.jpg",
+    src: "/assets/photos/sport/RL1D9987.jpg",
     title: "Centered Colts player breaking through traffic",
     position: "center 40%",
   },
@@ -1336,7 +1407,7 @@ const services = [
 ];
 
 const contactLinks = [
-  { label: "Email", value: "hello@drobbmedia.com", href: "mailto:hello@drobbmedia.com" },
+  { label: "Email", value: "drobbmedia@gmail.com", href: "mailto:drobbmedia@gmail.com" },
   { label: "Instagram", value: "@drobbmedia", href: "https://instagram.com/drobbmedia" },
   { label: "Phone", value: "+61 ___ ___ ___", href: "tel:+61000000000" },
 ];
@@ -1353,10 +1424,10 @@ function shuffled(items) {
   return next;
 }
 
-function paired(items) {
+function paired(items, size = 2) {
   const pairs = [];
-  for (let index = 0; index < items.length; index += 2) {
-    pairs.push(items.slice(index, index + 2));
+  for (let index = 0; index < items.length; index += size) {
+    pairs.push(items.slice(index, index + size));
   }
   return pairs;
 }
@@ -1368,14 +1439,21 @@ const portfolioSections = [
     title: "Sports",
     text: "Action, emotion, pressure, and the moments that decide the game.",
     photos: [
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/IMG_1435.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0146%20copy.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D0453.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D2589.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4371.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D4598.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D5520.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/sport/RL1D8789.JPG",
+      "/assets/photos/sport/IMG_1435.jpg",
+      "/assets/photos/sport/RL1D0146 copy.JPG",
+      "/assets/photos/sport/RL1D0583.JPG",
+      "/assets/photos/sport/RL1D0904.JPG",
+      "/assets/photos/sport/RL1D2589.jpg",
+      "/assets/photos/sport/RL1D4012.jpg",
+      "/assets/photos/sport/RL1D4085.JPG",
+      "/assets/photos/sport/RL1D4371.JPG",
+      "/assets/photos/sport/RL1D4598.jpg",
+      "/assets/photos/sport/RL1D4995.jpg",
+      "/assets/photos/sport/RL1D5032.jpg",
+      "/assets/photos/sport/RL1D5520.JPG",
+      "/assets/photos/sport/RL1D5824 copy.jpg",
+      "/assets/photos/sport/RL1D8789.JPG",
+      "/assets/photos/sport/RL1D9987.jpg",
     ],
   },
   {
@@ -1385,21 +1463,14 @@ const portfolioSections = [
     title: "Events",
     text: "Atmosphere, detail, people, and coverage built around the room.",
     photos: [
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/1-RL1D2680.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/1-RL1D3082.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/11-RL1D3523.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/7-RL1D3374.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/8-RL1D3414.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/DSC00269.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/DSC00326.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_0172.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_1148.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_1580.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_1709.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_1775.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/IMG_9731.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/RL1D3419.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/event/RL1D3499.jpg",
+      "/assets/photos/event/1-RL1D3082.jpg",
+      "/assets/photos/event/7-RL1D3374.jpg",
+      "/assets/photos/event/8-RL1D3414.jpg",
+      "/assets/photos/event/11-RL1D3523.jpg",
+      "/assets/photos/event/IMG_0172.JPG",
+      "/assets/photos/event/IMG_1709.JPG",
+      "/assets/photos/event/IMG_9731.jpg",
+      "/assets/photos/event/RL1D3419.jpg",
     ],
   },
   {
@@ -1408,14 +1479,14 @@ const portfolioSections = [
     title: "Commercial",
     text: "Clean brand imagery for teams, people, products, and campaigns.",
     photos: [
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/IMG_2253.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1584.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1610.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D1632.jpg",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D2381.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D2406.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D2425.JPG",
-      "https://raw.githubusercontent.com/darcyrobb1/drobbmedia/main/assets/photos/commercial/RL1D2430.JPG",
+      "/assets/photos/commercial/IMG_2253.JPG",
+      "/assets/photos/commercial/RL1D1584.jpg",
+      "/assets/photos/commercial/RL1D1610.jpg",
+      "/assets/photos/commercial/RL1D1632.jpg",
+      "/assets/photos/commercial/RL1D2381.JPG",
+      "/assets/photos/commercial/RL1D2406.JPG",
+      "/assets/photos/commercial/RL1D2425.JPG",
+      "/assets/photos/commercial/RL1D2430.JPG",
     ],
   },
 ];
@@ -1643,28 +1714,27 @@ function About() {
 function PortfolioPanel({ section }) {
   const panelRef = useRef(null);
   const photos = useMemo(() => shuffled(section.photos), [section.photos]);
-  const isSports = section.id === "portfolio-sports";
   const { scrollYProgress } = useScroll({
     target: panelRef,
     offset: ["start start", "55% start"],
   });
-  const sportsOpacity = useTransform(scrollYProgress, [0, 0.42, 1], [1, 0.86, 0]);
-  const sportsY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const sportsScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 1.08, 0.72]);
-  const sportsBlur = useTransform(scrollYProgress, [0, 0.65, 1], ["blur(0px)", "blur(0px)", "blur(18px)"]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.5, 0.78, 1], [1, 1, 0.28, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const titleScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 1.08, 0.72]);
+  const titleBlur = useTransform(scrollYProgress, [0, 0.65, 1], ["blur(0px)", "blur(0px)", "blur(18px)"]);
 
   return e(
     "article",
-    { ref: panelRef, key: section.id, id: section.id, className: `portfolio-panel ${isSports ? "portfolio-panel-featured" : ""}` },
+    { ref: panelRef, key: section.id, id: section.id, className: "portfolio-panel portfolio-panel-featured" },
     e(
       motion.div,
       {
         className: "portfolio-panel-copy",
-        style: isSports ? { opacity: sportsOpacity, y: sportsY, scale: sportsScale, filter: sportsBlur } : undefined,
-        initial: { opacity: 0, y: isSports ? 80 : 34 },
+        style: { opacity: titleOpacity, y: titleY, scale: titleScale, filter: titleBlur },
+        initial: { opacity: 0, y: 80 },
         whileInView: { opacity: 1, y: 0 },
-        viewport: { once: false, amount: isSports ? 0.72 : 0.36 },
-        transition: { duration: isSports ? 0.95 : 0.7, ease: [0.16, 1, 0.3, 1] },
+        viewport: { once: false, amount: 0.72 },
+        transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
       },
       e("p", { className: "eyebrow" }, `Portfolio / ${section.number}`),
       e("h2", null, section.title),
@@ -1673,7 +1743,7 @@ function PortfolioPanel({ section }) {
     e(
       "div",
       { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
-      paired(photos).map((photoPair, pairIndex) =>
+      paired(photos, 3).map((photoPair, pairIndex) =>
         e(
           motion.div,
           {
@@ -1688,7 +1758,7 @@ function PortfolioPanel({ section }) {
             e(
               "figure",
               { key: photo, className: "portfolio-photo-tile" },
-              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * 2 + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * 3 + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
             ),
           ),
         ),
@@ -1799,7 +1869,7 @@ function ContactForm() {
         "form",
         {
           className: "contact-form",
-          action: "mailto:hello@drobbmedia.com",
+          action: "mailto:drobbmedia@gmail.com",
           method: "post",
           encType: "text/plain",
         },
@@ -1838,7 +1908,7 @@ function Footer() {
       e("span", null, "DRobbMedia"),
     ),
     e("nav", { "aria-label": "Footer navigation" }, navItems.map((item) => e("a", { key: item.href, href: item.href }, item.label))),
-    e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:hello@drobbmedia.com" }, "Email")),
+    e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:drobbmedia@gmail.com" }, "drobbmedia@gmail.com")),
     e("p", null, `Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.`),
   );
 }
@@ -1854,6 +1924,7 @@ function App() {
   );
 }
 
+document.body.classList.remove("drobbmedia-fallback");
 createRoot(document.getElementById("root")).render(e(App));
 
     </script>

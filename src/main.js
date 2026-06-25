@@ -21,10 +21,10 @@ function shuffled(items) {
   return next;
 }
 
-function paired(items) {
+function paired(items, size = 2) {
   const pairs = [];
-  for (let index = 0; index < items.length; index += 2) {
-    pairs.push(items.slice(index, index + 2));
+  for (let index = 0; index < items.length; index += size) {
+    pairs.push(items.slice(index, index + size));
   }
   return pairs;
 }
@@ -252,28 +252,28 @@ function About() {
 function PortfolioPanel({ section }) {
   const panelRef = useRef(null);
   const photos = useMemo(() => shuffled(section.photos), [section.photos]);
-  const isSports = section.id === "portfolio-sports";
+  const photoGroupSize = 3;
   const { scrollYProgress } = useScroll({
     target: panelRef,
     offset: ["start start", "55% start"],
   });
-  const sportsOpacity = useTransform(scrollYProgress, [0, 0.42, 1], [1, 0.86, 0]);
-  const sportsY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const sportsScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 1.08, 0.72]);
-  const sportsBlur = useTransform(scrollYProgress, [0, 0.65, 1], ["blur(0px)", "blur(0px)", "blur(18px)"]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.5, 0.78, 1], [1, 1, 0.28, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const titleScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 1.08, 0.72]);
+  const titleBlur = useTransform(scrollYProgress, [0, 0.65, 1], ["blur(0px)", "blur(0px)", "blur(18px)"]);
 
   return e(
     "article",
-    { ref: panelRef, key: section.id, id: section.id, className: `portfolio-panel ${isSports ? "portfolio-panel-featured" : ""}` },
+    { ref: panelRef, key: section.id, id: section.id, className: "portfolio-panel portfolio-panel-featured" },
     e(
       motion.div,
       {
         className: "portfolio-panel-copy",
-        style: isSports ? { opacity: sportsOpacity, y: sportsY, scale: sportsScale, filter: sportsBlur } : undefined,
-        initial: { opacity: 0, y: isSports ? 80 : 34 },
+        style: { opacity: titleOpacity, y: titleY, scale: titleScale, filter: titleBlur },
+        initial: { opacity: 0, y: 80 },
         whileInView: { opacity: 1, y: 0 },
-        viewport: { once: false, amount: isSports ? 0.72 : 0.36 },
-        transition: { duration: isSports ? 0.95 : 0.7, ease: [0.16, 1, 0.3, 1] },
+        viewport: { once: false, amount: 0.72 },
+        transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
       },
       e("p", { className: "eyebrow" }, `Portfolio / ${section.number}`),
       e("h2", null, section.title),
@@ -282,7 +282,7 @@ function PortfolioPanel({ section }) {
     e(
       "div",
       { className: "portfolio-photo-grid", "aria-label": `${section.title} portfolio photos` },
-      paired(photos).map((photoPair, pairIndex) =>
+      paired(photos, photoGroupSize).map((photoPair, pairIndex) =>
         e(
           motion.div,
           {
@@ -297,7 +297,7 @@ function PortfolioPanel({ section }) {
             e(
               "figure",
               { key: photo, className: "portfolio-photo-tile" },
-              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * 2 + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
+              e("img", { src: photo, alt: `${section.title} portfolio photo ${pairIndex * photoGroupSize + offset + 1}`, loading: pairIndex < 2 ? "eager" : "lazy" }),
             ),
           ),
         ),
@@ -408,7 +408,7 @@ function ContactForm() {
         "form",
         {
           className: "contact-form",
-          action: "mailto:hello@drobbmedia.com",
+          action: "mailto:drobbmedia@gmail.com",
           method: "post",
           encType: "text/plain",
         },
@@ -447,7 +447,7 @@ function Footer() {
       e("span", null, "DRobbMedia"),
     ),
     e("nav", { "aria-label": "Footer navigation" }, navItems.map((item) => e("a", { key: item.href, href: item.href }, item.label))),
-    e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:hello@drobbmedia.com" }, "Email")),
+    e("div", { className: "footer-social" }, e("a", { href: "https://instagram.com/drobbmedia" }, "Instagram"), e("a", { href: "mailto:drobbmedia@gmail.com" }, "drobbmedia@gmail.com")),
     e("p", null, `Copyright ${new Date().getFullYear()} DRobbMedia. All rights reserved.`),
   );
 }
